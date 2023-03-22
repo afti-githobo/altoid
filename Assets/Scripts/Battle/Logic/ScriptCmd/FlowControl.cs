@@ -24,5 +24,47 @@
                 JumpToLabel(label);
             }
         }
+
+        [BattleScript(BattleScriptCmd.JumpToScriptUnconditional, typeof(string))]
+        public void Cmd_JumpToScriptUnconditional()
+        {
+            PopString(out string id);
+            var script = GetScriptInBank(id);
+            if (script == null) throw new BattleScriptException($"Attempted jump to script {id} not present in bank");
+            BeginExecutingScript(script);
+        }
+
+        [BattleScript(BattleScriptCmd.JumpToScriptConditional, typeof(string))]
+        public void Cmd_JumpToScriptConditional()
+        {
+            if (GetComparisonVal())
+            {
+                PopString(out string id);
+                var script = GetScriptInBank(id);
+                if (script == null) throw new BattleScriptException($"Attempted jump to script {id} not present in bank");
+                BeginExecutingScript(script);
+            }
+        }
+
+        [BattleScript(BattleScriptCmd.BranchToScriptUnconditional, typeof(string))]
+        public void Cmd_BranchToScriptUnconditional()
+        {
+            PopString(out string id);
+            var script = GetScriptInBank(id);
+            if (script == null) throw new BattleScriptException($"Attempted branch to script {id} not present in bank");
+            BranchToScript(script);
+        }
+
+        [BattleScript(BattleScriptCmd.BranchToScriptConditional, typeof(string))]
+        public void Cmd_BranchToScriptConditional()
+        {
+            if (GetComparisonVal())
+            {
+                PopString(out string id);
+                var script = GetScriptInBank(id);
+                if (script == null) throw new BattleScriptException($"Attempted branch to script {id} not present in bank");
+                BranchToScript(script);
+            }
+        }
     }
 }

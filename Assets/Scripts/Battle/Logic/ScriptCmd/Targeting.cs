@@ -1,7 +1,65 @@
-﻿namespace Altoid.Battle.Logic
+﻿using System.Collections.Generic;
+
+namespace Altoid.Battle.Logic
 {
     public partial class BattleRunner
     {
+        public Battler ActingBattler { get => _actingBattler; }
+        private Battler _actingBattler;
+        public IReadOnlyList<Battler> AllTargets { get => _allTargets; }
+        private List<Battler> _allTargets;
+        public IReadOnlyList<Battler> SelectedTarget { get => _selectedTargets; }
+        private List<Battler> _selectedTargets;
+
+        private void AddActionTargets(Battler[] battlers)
+        {
+            for (int i = 0; i < battlers.Length; i++)
+            {
+                _allTargets.Add(battlers[i]);
+            }
+        }
+
+        private void ClearActionTargets()
+        {
+            _allTargets.Clear();
+            _selectedTargets.Clear();
+        }
+        private void ClearSelectedActionTargets()
+        {
+            _selectedTargets.Clear();
+        }
+
+        private void RemoveActionTargets(Battler[] battlers)
+        {
+            for (int i = 0; i < battlers.Length; i++)
+            {
+                _allTargets.Remove(battlers[i]);
+            }
+        }
+
+        private void SetActingBattler(Battler b)
+        {
+            _actingBattler = b;
+        }
+
+        private void SelectActionTargets(Battler[] battlers)
+        {
+            for (int i = 0; i < battlers.Length; i++)
+            {
+                _selectedTargets.Add(battlers[i]);
+            }
+        }
+
+        private void UnselectActionTargets(Battler[] battlers)
+        {
+            for (int i = 0; i < battlers.Length; i++)
+            {
+                _selectedTargets.Remove(battlers[i]);
+            }
+        }
+
+        private void UnsetActingBattler() => _actingBattler = null;
+
         [BattleScript(BattleScriptCmd.AddActionTargets)]
         public void Cmd_AddActionTargets()
         {

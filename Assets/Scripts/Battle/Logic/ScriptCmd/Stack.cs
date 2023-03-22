@@ -249,8 +249,11 @@ namespace Altoid.Battle.Logic
             _stack.Push(v.Length);
         }
 
+        private int StackDepth { get => _stack.Count; }
+        private void ClearStack() => _stack.Clear();
+
         [BattleScript(BattleScriptCmd.Clear)]
-        public void Cmd_Clear() => _stack.Clear();
+        public void Cmd_Clear() => ClearStack();
 
         [BattleScript(BattleScriptCmd.PushFloat, typeof(float))]
         public void Cmd_PushFloat()

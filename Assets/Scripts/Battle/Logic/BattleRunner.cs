@@ -1,28 +1,38 @@
 using Altoid.Battle.Data;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using UnityEngine;
 
 namespace Altoid.Battle.Logic
 {
     public partial class BattleRunner
     {
+        private readonly struct Frame
+        {
+            public readonly BattleScript script;
+            public readonly int codePointer;
+
+            public Frame(BattleScript script, int codePointer)
+            {
+                this.script = script;
+                this.codePointer = codePointer;
+            }
+        }
+
         public event EventHandler<int> DoLoadBattleScene;
         public event EventHandler OnLoadedBattleScene;
         public event EventHandler OnLoadedPuppetBatch;
         public event EventHandler<string> OnSignal;
 
+        public event EventHandler<string> OnScriptExecutionStarted;
+        public event EventHandler<string> OnScriptExecutionEnded;
+        public event EventHandler<string> OnScriptExecutionSuspended;
+        public event EventHandler OnAllScriptExecutionEnded;
+
         public IReadOnlyList<Battler> Battlers { get => _battlers; }
         private List<Battler> _battlers;
 
         public BattleDef Definition { get; private set; }
-
-        public Battler ActingBattler { get => _actingBattler; }
-        private Battler _actingBattler;
-        public IReadOnlyList<Battler> AllTargets { get => _allTargets; }
-        private List<Battler> _allTargets;
-        public IReadOnlyList<Battler> SelectedTarget { get => _selectedTargets; }
-        private List<Battler> _selectedTargets;
 
         private BattleScript currentScript;
         private BattleScriptCmd currentCmd { get => (BattleScriptCmd)currentScript.Code[codePointer]; }
@@ -30,6 +40,12 @@ namespace Altoid.Battle.Logic
         private int currentScript_Next { get => currentScript.Code[codePointer++]; }
 
         private int codePointer;
+
+        private Stack<Frame> _executionStack = new();
+
+        private Dictionary<string, BattleScript> _scriptBank = new();
+
+        private BattleScript GetScriptInBank(string id) => _scriptBank.ContainsKey(id) ? _scriptBank[id] : null;
 
         public async void Load(BattleDef battleDef)
         {
@@ -43,55 +59,57 @@ namespace Altoid.Battle.Logic
             // async: need to load battle scene and battler puppets...
         }
 
-        private void AddActionTargets(Battler[] battlers)
+        public void LoadScripts(params TextAsset[] scripts)
         {
-            for (int i = 0; i < battlers.Length; i++)
+            for (int i = 0; i < scripts.Length; i++)
             {
-                _allTargets.Add(battlers[i]);
+                var script = BattleScript.Parse(scripts[i]);
+                _scriptBank[script.Name] = script;
             }
         }
 
-        private void ClearActionTargets()
+        public void Step()
         {
-            _allTargets.Clear();
-            _selectedTargets.Clear();
-        }
-        private void ClearSelectedActionTargets()
-        {
-            _selectedTargets.Clear();
+            ExecuteBattleScriptCmd();
         }
 
-        private void RemoveActionTargets(Battler[] battlers)
+        public bool IsExecutingScript { get => currentScript != null; }
+
+        private void BeginExecutingScript(BattleScript script)
         {
-            for (int i = 0; i < battlers.Length; i++)
+            currentScript = script;
+            codePointer = 0;
+            OnScriptExecutionStarted?.Invoke(this, script.Name);
+        }
+
+        private void BranchToScript(BattleScript script)
+        {
+            _executionStack.Push(new Frame(currentScript, codePointer));
+            BeginExecutingScript(script);
+        }
+
+        private void EndExecutingScript()
+        {
+            OnScriptExecutionEnded?.Invoke(this, currentScript.Name);
+            if (_executionStack.Count > 0)
             {
-                _allTargets.Remove(battlers[i]);
+                var frame = _executionStack.Pop();
+                currentScript = frame.script;
+                codePointer = frame.codePointer;
+            } else
+            {
+                OnAllScriptExecutionEnded?.Invoke(this, EventArgs.Empty);
+                currentScript = null;
+                codePointer = 0;
+                if (StackDepth > 0) Debug.LogWarning($"Script execution ended with a stack depth of {StackDepth}. This may indicate a problem with a script somewhere. If this is expected, ignore this message.");
+                ClearStack();
             }
         }
 
-        private void SetActingBattler(Battler b)
+        private void ExecuteBattleScriptCmd()
         {
-            _actingBattler = b;
+            BattleScript.BattleScriptCmdTable[currentCmd].Invoke(this);
+            codePointer++;
         }
-
-        private void SelectActionTargets(Battler[] battlers)
-        {
-            for (int i = 0; i < battlers.Length; i++)
-            {
-                _selectedTargets.Add(battlers[i]);
-            }
-        }
-
-        private void UnselectActionTargets(Battler[] battlers)
-        {
-            for (int i = 0; i < battlers.Length; i++)
-            {
-                _selectedTargets.Remove(battlers[i]);
-            }
-        }
-
-        private void UnsetActingBattler() => _actingBattler = null;
-
-        private void ExecuteBattleScriptCmd() => BattleScript.BattleScriptCmdTable[currentCmd].Invoke(this);
     }
 }

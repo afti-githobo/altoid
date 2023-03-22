@@ -10,10 +10,11 @@ namespace Altoid.Battle.Logic
 {
     public class BattleScript
     {
+        public readonly string Name;
         public readonly IReadOnlyList<int> Code;
         public readonly IReadOnlyDictionary<string, int> Labels;
 
-        public BattleScript(IReadOnlyList<int> code, IReadOnlyDictionary<string, int> labels)
+        public BattleScript(string name, IReadOnlyList<int> code, IReadOnlyDictionary<string, int> labels)
         {
             Code = code;
             Labels = labels;
@@ -217,7 +218,7 @@ namespace Altoid.Battle.Logic
                     }
                 }
             }
-            return new BattleScript(cmdList, labelTable);
+            return new BattleScript(scriptName, cmdList, labelTable);
         }
     }
 }

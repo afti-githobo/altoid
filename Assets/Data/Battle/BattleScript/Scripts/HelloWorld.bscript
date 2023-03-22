@@ -1,0 +1,30 @@
+// HelloWorld.bscript
+
+// You can call commands with arguments in scripts - more readable if the value is known ahead of time
+ShowMsg 0
+
+// Or you can load values onto the stack before calling, at which point the command will pull values off the stack to populate its arguments.
+PushInt 1
+ShowMsg
+
+// Setting up a loop...
+PushInt 0
+
+// You also have some flow control tools!
+JumpUnconditional LOOP_TAIL
+
+#LOOP
+// We skip over this block of the script, then come back later
+// Don't actually write crazy spaghetti code for no reason in the real world, of course.
+ShowMsg 2
+
+#LOOP_TAIL
+ShowMsg 3
+
+// Do the loop...
+AddInt 1
+IntLessThan 4
+JumpConditional LOOP
+
+// The loop ends after 3 reps
+ShowMsg 4

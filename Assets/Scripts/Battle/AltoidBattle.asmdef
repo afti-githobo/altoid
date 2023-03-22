@@ -1,0 +1,16 @@
+{
+    "name": "AltoidBattle",
+    "rootNamespace": "",
+    "references": [
+        "GUID:58ef50005f1cfc74cb74df971710d964"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

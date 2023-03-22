@@ -231,20 +231,22 @@ namespace Altoid.Battle.Logic
 
         private void PushFloatArray(float[] vs)
         {
-            _stack.Push(vs.Length);
+            Array.Reverse(vs);
             PushFloat(vs);
+            _stack.Push(vs.Length);
         }
 
         private void PushIntArray(int[] vs)
         {
-            _stack.Push(vs.Length);
+            Array.Reverse(vs);
             PushInt(vs);
+            _stack.Push(vs.Length);
         }
 
         private void PushString(string v)
         {
+            for (int i = v.Length - 1; i  > -1; i--) _stack.Push(BitConverter.ToInt32(BitConverter.GetBytes(v[i])));
             _stack.Push(v.Length);
-            for (int i = 0; i < v.Length; i++) _stack.Push(BitConverter.ToInt32(BitConverter.GetBytes(v[i])));
         }
 
         [BattleScript(BattleScriptCmd.Clear)]

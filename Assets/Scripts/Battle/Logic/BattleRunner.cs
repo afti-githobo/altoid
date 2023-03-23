@@ -35,9 +35,9 @@ namespace Altoid.Battle.Logic
         public BattleDef Definition { get; private set; }
 
         private BattleScript currentScript;
-        private BattleScriptCmd currentCmd { get => (BattleScriptCmd)currentScript.Code[codePointer]; }
+        private BattleScriptCmd currentCmd;
 
-        private int currentScript_Next { get => currentScript.Code[codePointer++]; }
+        private int currentScript_Next { get => currentScript?.Code[codePointer+=1] ?? (int)BattleScriptCmd.Invalid; }
 
         private int codePointer;
 
@@ -59,6 +59,14 @@ namespace Altoid.Battle.Logic
             // async: need to load battle scene and battler puppets...
         }
 
+        public void LoadScripts(params BattleScript[] scripts)
+        {
+            for (int i = 0; i < scripts.Length; i++)
+            {
+                _scriptBank[scripts[i].Name] = scripts[i];
+            }
+        }
+
         public void LoadScripts(params TextAsset[] scripts)
         {
             for (int i = 0; i < scripts.Length; i++)
@@ -70,7 +78,19 @@ namespace Altoid.Battle.Logic
 
         public void Step()
         {
-            ExecuteBattleScriptCmd();
+            if (currentScript != null)
+            {
+                ExecuteBattleScriptCmd();
+                if (codePointer == currentScript.Code.Count) EndExecutingScript();
+            }
+
+        }
+
+        public void RunScript(string scriptName)
+        {
+            var script = GetScriptInBank(scriptName);
+            if (script == null) throw new BattleScriptException($"No script {scriptName} present in bank - cannot begin execution");
+            BeginExecutingScript(script);
         }
 
         public bool IsExecutingScript { get => currentScript != null; }
@@ -104,12 +124,15 @@ namespace Altoid.Battle.Logic
                 if (StackDepth > 0) Debug.LogWarning($"Script execution ended with a stack depth of {StackDepth}. This may indicate a problem with a script somewhere. If this is expected, ignore this message.");
                 ClearStack();
             }
+            Debug.Log("Script execution ended");
         }
 
         private void ExecuteBattleScriptCmd()
         {
+            currentCmd = (BattleScriptCmd)currentScript.Code[codePointer];
             BattleScript.BattleScriptCmdTable[currentCmd].Invoke(this);
             codePointer++;
+
         }
     }
 }

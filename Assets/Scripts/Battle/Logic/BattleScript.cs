@@ -16,6 +16,7 @@ namespace Altoid.Battle.Logic
 
         public BattleScript(string name, IReadOnlyList<int> code, IReadOnlyDictionary<string, int> labels)
         {
+            Name = name;
             Code = code;
             Labels = labels;
         }
@@ -211,6 +212,7 @@ namespace Altoid.Battle.Logic
                             }
                         }
                     }
+                    else addLate = true;
                     if (addLate)
                     {
                         cmdList.Add((int)cmd);

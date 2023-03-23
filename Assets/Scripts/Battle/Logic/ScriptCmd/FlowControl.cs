@@ -8,6 +8,9 @@
             codePointer = currentScript.Labels[label];
         }
 
+        [BattleScript(BattleScriptCmd.Nop)]
+        public void Cmd_Nop() => UnityEngine.Debug.Log($"{currentScript.Name} - nop");
+
         [BattleScript(BattleScriptCmd.JumpUnconditional, typeof(string))]
         public void Cmd_JumpUnconditional()
         {

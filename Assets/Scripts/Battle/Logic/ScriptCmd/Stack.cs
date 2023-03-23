@@ -211,7 +211,7 @@ namespace Altoid.Battle.Logic
         {
             StringBuilder sb = new();
             var len = _stack.Pop();
-            for (int i = 0; i < len; i++) sb.Append(BitConverter.ToChar(BitConverter.GetBytes(_stack.Pop())));
+            for (int i = 0; i < len; i++) sb.Append((char)_stack.Pop());
             return sb.ToString();
         }
 
@@ -219,14 +219,14 @@ namespace Altoid.Battle.Logic
 
         private void PushFloat(params float[] vs)
         {
-            for (int i = 0; i < vs.Length; i++) PushFloat(vs[i]);
+            for (int i = vs.Length - 1; i > -1; i--) PushFloat(vs[i]);
         }
 
         private void PushInt(int v) => _stack.Push(v);
 
         private void PushInt(params int[] vs)
         {
-            for (int i = 0; i < vs.Length; i++) PushInt(vs[i]);
+            for (int i = vs.Length - 1; i > -1; i--) PushInt(vs[i]);
         }
 
         private void PushFloatArray(float[] vs)
@@ -245,11 +245,11 @@ namespace Altoid.Battle.Logic
 
         private void PushString(string v)
         {
-            for (int i = v.Length - 1; i  > -1; i--) _stack.Push(BitConverter.ToInt32(BitConverter.GetBytes(v[i])));
+            for (int i = v.Length - 1; i  > -1; i--) _stack.Push(v[i]);
             _stack.Push(v.Length);
         }
 
-        private int StackDepth { get => _stack.Count; }
+        public int StackDepth { get => _stack.Count; }
         private void ClearStack() => _stack.Clear();
 
         [BattleScript(BattleScriptCmd.Clear)]
@@ -262,15 +262,12 @@ namespace Altoid.Battle.Logic
             if (len > 1)
             {
                 var vs = new float[len];
-                for (int i = 0; i < len; i++)
-                {
-                    vs[i] = BitConverter.ToSingle(BitConverter.GetBytes(currentScript_Next));
-                }
+                for (int i = 0; i < len; i++) vs[i] = BitConverter.ToSingle(BitConverter.GetBytes(currentScript_Next));
                 PushFloat(vs);
             }
             else
             {
-                PushFloat(currentScript_Next);
+                PushFloat(BitConverter.ToSingle(BitConverter.GetBytes(currentScript_Next)));
             }
         }
 
@@ -278,12 +275,16 @@ namespace Altoid.Battle.Logic
         public void Cmd_PushInt()
         {
             var len = currentScript_Next;
-            var vs = new int[len];
-            for (int i = 0; i < len; i++)
+            if (len > 1)
             {
-                vs[i] = currentScript_Next;
+                var vs = new int[len];
+                for (int i = 0; i < len; i++) vs[i] = currentScript_Next;
+                PushInt(vs);
             }
-            PushInt(vs);
+            else
+            {
+                PushInt(currentScript_Next);
+            }
         }
 
         [BattleScript(BattleScriptCmd.PushString, typeof(string))]
@@ -310,16 +311,16 @@ namespace Altoid.Battle.Logic
             PushFloatArray(vs);
         }
 
-        [BattleScript(BattleScriptCmd.PushIntArray, typeof(float))]
+        [BattleScript(BattleScriptCmd.PushIntArray, typeof(int))]
         public void Cmd_PushIntArray()
         {
             var len = currentScript_Next;
-            var vs = new float[len];
+            var vs = new int[len];
             for (int i = 0; i < len; i++)
             {
-                vs[i] = BitConverter.ToSingle(BitConverter.GetBytes(currentScript_Next));
+                vs[i] = currentScript_Next;
             }
-            PushFloatArray(vs);
+            PushIntArray(vs);
         }
     }
 }

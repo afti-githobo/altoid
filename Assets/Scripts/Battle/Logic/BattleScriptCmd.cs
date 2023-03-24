@@ -30,7 +30,7 @@
         IntEquals,
         IntNotEquals,
         StringContains,
-        StringDoesNotContain,
+        StringNotContains,
         StringEquals,
         StringNotEquals,
         IntAdd,

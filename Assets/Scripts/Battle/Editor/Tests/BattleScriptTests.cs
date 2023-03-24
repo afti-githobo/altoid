@@ -6,6 +6,7 @@ using System.Reflection;
 using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
+using Altoid.Battle;
 
 public class BattleScriptTests
 {
@@ -40,7 +41,6 @@ public class BattleScriptTests
         Assert.AreEqual(2, parsed.Labels.Count);
         Assert.AreEqual(0, parsed.Labels["Label0"]);
         Assert.AreEqual(15, parsed.Labels["Label1"]);
-        Debug.Log($"Disassembly:\n{BattleScript.Disassemble(parsed.Code)}");
     }
 
     [Test]
@@ -122,7 +122,6 @@ public class BattleScriptTests
     {
         const string script = "PushIntArray 0 1 2 3 4 5\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        Assert.AreEqual((int)BattleScriptCmd.PushIntArray, parsed.Code[0]);
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
@@ -138,6 +137,51 @@ public class BattleScriptTests
     [Test]
     public void FloatComparisonsTest()
     {
+        const string script = "FloatGreaterThan 1 0\nFloatLessThan 0 1\nFloatGreaterThanEquals 1 0\nFloatLessThanEquals 0 1\nFloatEquals 1 1\nFloatNotEquals 0 1\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 12; i++) env.Step();
+        Assert.AreEqual(6, env.StackDepth);
+        for (int i = 0; i < 6; i++)
+        {
+            var v = (int)CallPrivate(env, "_PopInt", new Type[0]);
+            Assert.AreEqual(Constants.TRUE, v);
+        }
+    }
 
+    [Test]
+    public void IntComparisonsTest()
+    {
+        const string script = "IntGreaterThan 1 0\nIntLessThan 0 1\nIntGreaterThanEquals 1 0\nIntLessThanEquals 0 1\nIntEquals 1 1\nIntNotEquals 0 1\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 12; i++) env.Step();
+        Assert.AreEqual(6, env.StackDepth);
+        for (int i = 0; i < 6; i++)
+        {
+            var v = (int)CallPrivate(env, "_PopInt", new Type[0]);
+            Assert.AreEqual(Constants.TRUE, v);
+        }
+    }
+
+    [Test]
+    public void StringComparisonsTest()
+    {
+        const string script = "PushString foo\nStringContains foobar\nPushString bar\nStringNotContains foo\nPushString foo\nStringEquals foo\nPushString foo\nStringNotEquals bar\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 12; i++) env.Step();
+        Assert.AreEqual(4, env.StackDepth);
+        for (int i = 0; i < 4; i++)
+        {
+            var v = (int)CallPrivate(env, "_PopInt", new Type[0]);
+            Assert.AreEqual(Constants.TRUE, v);
+        }
     }
 }

@@ -124,7 +124,6 @@ namespace Altoid.Battle.Logic
                 if (StackDepth > 0) Debug.LogWarning($"Script execution ended with a stack depth of {StackDepth}. This may indicate a problem with a script somewhere. If this is expected, ignore this message.");
                 ClearStack();
             }
-            Debug.Log("Script execution ended");
         }
 
         private void ExecuteBattleScriptCmd()
@@ -132,7 +131,6 @@ namespace Altoid.Battle.Logic
             currentCmd = (BattleScriptCmd)currentScript.Code[codePointer];
             BattleScript.BattleScriptCmdTable[currentCmd].Invoke(this);
             codePointer++;
-
         }
     }
 }

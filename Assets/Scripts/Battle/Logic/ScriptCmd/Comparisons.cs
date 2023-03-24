@@ -124,7 +124,7 @@
             else PushInt(Constants.FALSE);
         }
 
-        [BattleScript(BattleScriptCmd.StringDoesNotContain, typeof(string))]
+        [BattleScript(BattleScriptCmd.StringNotContains, typeof(string))]
         public void Cmd_StringDoesNotContain()
         {
             PopString(out var a, out var b);

@@ -149,6 +149,7 @@ public class BattleScriptTests
             var v = (int)CallPrivate(env, "_PopInt", new Type[0]);
             Assert.AreEqual(Constants.TRUE, v);
         }
+        Assert.AreEqual(0, env.StackDepth);
     }
 
     [Test]
@@ -166,6 +167,7 @@ public class BattleScriptTests
             var v = (int)CallPrivate(env, "_PopInt", new Type[0]);
             Assert.AreEqual(Constants.TRUE, v);
         }
+        Assert.AreEqual(0, env.StackDepth);
     }
 
     [Test]
@@ -183,6 +185,7 @@ public class BattleScriptTests
             var v = (int)CallPrivate(env, "_PopInt", new Type[0]);
             Assert.AreEqual(Constants.TRUE, v);
         }
+        Assert.AreEqual(0, env.StackDepth);
     }
 
     [Test]
@@ -205,6 +208,7 @@ public class BattleScriptTests
             var v = (float)CallPrivate(env, "_PopFloat", new Type[0]);
             Assert.AreEqual(2, v);
         }
+        Assert.AreEqual(0, env.StackDepth);
     }
 
     [Test]
@@ -227,5 +231,6 @@ public class BattleScriptTests
             var v = (int)CallPrivate(env, "_PopInt", new Type[0]);
             Assert.AreEqual(2, v);
         }
+        Assert.AreEqual(0, env.StackDepth);
     }
 }

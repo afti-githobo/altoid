@@ -356,7 +356,7 @@ namespace Altoid.Battle.Logic
             PopIntArray(out var arr);
             var fs = new int[arr.Count];
             for (int i = 0; i < fs.Length; i++) fs[i] = arr[i];
-            PushFloat(Mathf.Min(fs));
+            PushInt(Mathf.Min(fs));
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace Altoid.Battle.Logic
         /// a: int
         /// </summary>
         /// <returns>float</returns>
-        [BattleScript(BattleScriptCmd.Int2Float, typeof(float))]
+        [BattleScript(BattleScriptCmd.Int2Float, typeof(int))]
         public void Cmd_Int2Float()
         {
             PopInt(out var a);

@@ -184,4 +184,26 @@ public class BattleScriptTests
             Assert.AreEqual(Constants.TRUE, v);
         }
     }
+
+    [Test]
+    public void FloatMathTest()
+    {
+        const string script = "FloatAdd 1 1\nFloatSub 3 1\nFloatMult 1 2\nFloatDiv 4 2\nPushFloatArray 4 3 2\nFloatMin\nPushFloatArray 0 1 2\nFloatMax\nPushFloatArray 0 4\nFloatMean\n" +
+            "FloatSqrt 4\nFloatAbs -2\nFloatFloor 2.5\nFloatCeil 1.5\nFloatRound 2.1\nFloat2Int 2\nFloatRand 0 1\n FloatSign -10\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 30; i++) env.Step();
+        Assert.AreEqual(15, env.StackDepth);
+        Assert.AreEqual(-1, (float)CallPrivate(env, "_PopFloat", new Type[0]));
+        var rand = (float)CallPrivate(env, "_PopFloat", new Type[0]);
+        Assert.IsTrue(rand >= 0 && rand <= 1);
+        Assert.AreEqual(2, (int)CallPrivate(env, "_PopInt", new Type[0]));
+        for (int i = 0; i < 12; i++)
+        {
+            var v = (float)CallPrivate(env, "_PopFloat", new Type[0]);
+            Assert.AreEqual(2, v);
+        }
+    }
 }

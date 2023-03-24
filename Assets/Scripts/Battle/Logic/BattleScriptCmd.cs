@@ -37,6 +37,7 @@
         IntSub,
         IntMult,
         IntDiv,
+        IntMod,
         IntMin,
         IntMax,
         IntMean,

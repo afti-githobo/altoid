@@ -166,7 +166,12 @@ namespace Altoid.Battle.Logic
                         if (_argsParserTable.ContainsKey(cmd)) cmdIndex += _argsParserTable[cmd](splut, cmdList);
                         else
                         {
-                            cmdIndex += ParseArgsPushFloat(splut, cmdList);
+                            if (splut.Length > 1)
+                            {
+                                cmdList.Add((int)BattleScriptCmd.PushFloat);
+                                cmdIndex++;
+                                cmdIndex += ParseArgsPushFloat(splut, cmdList);
+                            }
                             if (cmd != BattleScriptCmd.PushFloat) addLate = true;
                             else if (splut.Length == 1) throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - load command with no data");
                         }
@@ -176,7 +181,12 @@ namespace Altoid.Battle.Logic
                         if (_argsParserTable.ContainsKey(cmd)) cmdIndex += _argsParserTable[cmd](splut, cmdList);
                         else
                         {
-                            cmdIndex += ParseArgsPushInt(splut, cmdList);
+                            if (splut.Length > 1)
+                            {
+                                cmdList.Add((int)BattleScriptCmd.PushInt);
+                                cmdIndex++;
+                                cmdIndex += ParseArgsPushInt(splut, cmdList);
+                            }
                             if (cmd != BattleScriptCmd.PushInt) addLate = true;
                             else if (splut.Length == 1) throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - load command with no data");
                         }
@@ -186,7 +196,12 @@ namespace Altoid.Battle.Logic
                         if (_argsParserTable.ContainsKey(cmd)) cmdIndex += _argsParserTable[cmd](splut, cmdList);
                         else
                         {
-                            cmdIndex += ParseArgsPushString(data, splut, cmdList);
+                            if (splut.Length > 1)
+                            {
+                                cmdList.Add((int)BattleScriptCmd.PushString);
+                                cmdIndex++;
+                                cmdIndex += ParseArgsPushString(data, splut, cmdList);
+                            }            
                             if (cmd != BattleScriptCmd.PushString) addLate = true;
                             else if (splut.Length == 1) throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - load command with no data");
                         }
@@ -204,23 +219,18 @@ namespace Altoid.Battle.Logic
 
         private static int ParseArgsPushFloat(string[] tokens, List<int> code)
         {
-            code.Add((int)BattleScriptCmd.PushFloat);
             var len = 1;
-            if (tokens.Length > 1)
+            code.Add(tokens.Length - 1);
+            for (int i = 1; i < tokens.Length; i++)
             {
-                code.Add(tokens.Length - 1);
-                len++;
-                for (int i = 1; i < tokens.Length; i++)
+                try
                 {
-                    try
-                    {
-                        code.Add(BitConverter.SingleToInt32Bits(float.Parse(tokens[i])));
-                        len++;
-                    }
-                    catch
-                    {
-                        throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
-                    }
+                    code.Add(BitConverter.SingleToInt32Bits(float.Parse(tokens[i])));
+                    len++;
+                }
+                catch
+                {
+                    throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
                 }
             }
             return len;
@@ -228,23 +238,18 @@ namespace Altoid.Battle.Logic
 
         private static int ParseArgsPushInt(string[] tokens, List<int> code)
         {
-            code.Add((int)BattleScriptCmd.PushInt);
             var len = 1;
-            if (tokens.Length > 1)
+            code.Add(tokens.Length - 1);
+            for (int i = 1; i < tokens.Length; i++)
             {
-                code.Add(tokens.Length - 1);
-                len++;
-                for (int i = 1; i < tokens.Length; i++)
+                try
                 {
-                    try
-                    {
-                        code.Add(int.Parse(tokens[i]));
-                        len++;
-                    }
-                    catch
-                    {
-                        throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
-                    }
+                    code.Add(int.Parse(tokens[i]));
+                    len++;
+                }
+                catch
+                {
+                    throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
                 }
             }
             return len;
@@ -252,24 +257,19 @@ namespace Altoid.Battle.Logic
 
         private static int ParseArgsPushString(string raw, string[] tokens, List<int> code)
         {
-            code.Add((int)BattleScriptCmd.PushString);
             var len = 1;
-            if (tokens.Length > 1)
+            var s = raw.Substring(tokens[0].Length).TrimStart().ToCharArray();
+            code.Add(s.Length);
+            for (int i = 0; i < s.Length; i++)
             {
-                var s = raw.Substring(tokens[0].Length).TrimStart().ToCharArray();
-                code.Add(s.Length);
-                len++;
-                for (int i = 0; i < s.Length; i++)
+                try
                 {
-                    try
-                    {
-                        code.Add(s[i]);
-                        len++;
-                    }
-                    catch
-                    {
-                        throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
-                    }
+                    code.Add(s[i]);
+                    len++;
+                }
+                catch
+                {
+                    throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
                 }
             }
             return len;

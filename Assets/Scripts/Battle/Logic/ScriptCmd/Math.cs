@@ -310,7 +310,7 @@ namespace Altoid.Battle.Logic
         /// <summary>
         /// <para>Altoid BattleScript command.</para>
         /// 
-        /// <para>Pops two ins off the stack, divides a / b, and pushes the result to the stack.</para>
+        /// <para>Pops two ints off the stack, divides a / b, and pushes the result to the stack.</para>
         ///
         /// <para>Operands:</para>
         /// a: int
@@ -322,6 +322,23 @@ namespace Altoid.Battle.Logic
         {
             PopInt(out var a, out var b);
             PushInt(a / b);
+        }
+
+        /// <summary>
+        /// <para>Altoid BattleScript command.</para>
+        /// 
+        /// <para>Pops two ints off the stack, gets the modulus of a / b, and pushes the result to the stack.</para>
+        ///
+        /// <para>Operands:</para>
+        /// a: int
+        /// b: int
+        /// </summary>
+        /// <returns>int</returns>
+        [BattleScript(BattleScriptCmd.IntMod, typeof(int))]
+        public void Cmd_IntMod()
+        {
+            PopInt(out var a, out var b);
+            PushInt(a % b);
         }
 
         /// <summary>

@@ -5,6 +5,7 @@ using System;
 using System.Reflection;
 using UnityEngine.TestTools;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BattleScriptTests
 {
@@ -97,5 +98,46 @@ public class BattleScriptTests
         var v = (string)CallPrivate(env, "_PopString", new Type[0]);
         Assert.AreEqual(0, env.StackDepth);
         Assert.AreEqual("ABCDEFG", v);
+    }
+
+    [Test]
+    public void StackFloatArrayTest()
+    {
+        const string script = "PushFloatArray 0 1 2 3 4 5\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        env.Step();
+        Assert.AreEqual(7, env.StackDepth);
+        var vs = (IReadOnlyList<float>)CallPrivate(env, "_PopFloatArray", new Type[0]);
+        var expected = new float[] { 0, 1, 2, 3, 4, 5 };
+        Assert.AreEqual(0, env.StackDepth);
+        Assert.AreEqual(6, vs.Count);
+        for (int i = 0; i < vs.Count; i++) Assert.AreEqual(vs[i], expected[i]);
+    }
+
+    [Test]
+    public void StackIntArrayTest()
+    {
+        const string script = "PushIntArray 0 1 2 3 4 5\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        Assert.AreEqual((int)BattleScriptCmd.PushIntArray, parsed.Code[0]);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        env.Step();
+        Assert.AreEqual(7, env.StackDepth);
+        var vs = (IReadOnlyList<int>)CallPrivate(env, "_PopIntArray", new Type[0]);
+        var expected = new int[] { 0, 1, 2, 3, 4, 5 };
+        Assert.AreEqual(0, env.StackDepth);
+        Assert.AreEqual(6, vs.Count);
+        for (int i = 0; i < vs.Count; i++) Assert.AreEqual(vs[i], expected[i]);
+    }
+
+    [Test]
+    public void FloatComparisonsTest()
+    {
+
     }
 }

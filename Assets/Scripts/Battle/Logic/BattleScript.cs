@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Altoid.Battle.Logic
 {
-    public class BattleScript
+    public partial class BattleScript
     {
         public readonly string Name;
         public readonly IReadOnlyList<int> Code;
@@ -24,10 +24,12 @@ namespace Altoid.Battle.Logic
         public static IReadOnlyDictionary<BattleScriptCmd, Action<BattleRunner>> BattleScriptCmdTable { get => _battleScriptCmdTable; }
         private static Dictionary<BattleScriptCmd, Action<BattleRunner>> _battleScriptCmdTable = new();
         private static Dictionary<BattleScriptCmd, Type> _battleScriptOperandTypeTable = new();
+        private static Dictionary<BattleScriptCmd, Func<string[], List<int>, int>> _argsParserTable = new();
 
         static BattleScript()
         {
             BuildBattleScriptCmdTable();
+            BuildCustomArgsParserTable();
         }
 
         /// <summary>
@@ -79,8 +81,7 @@ namespace Altoid.Battle.Logic
 
         private static void BuildBattleScriptCmdTable()
         {
-            var methods = Assembly.GetAssembly(typeof(BattleRunner)).GetType(typeof(BattleRunner).FullName)
-                .GetMethods(BindingFlags.Instance | BindingFlags.Public)
+            var methods = typeof(BattleRunner).GetMethods(BindingFlags.Instance | BindingFlags.Public)
                 .Where(m => m.GetCustomAttributes(typeof(BattleScriptAttribute), false).Length > 0)
                 .ToArray();
             foreach (var method in methods)
@@ -101,16 +102,37 @@ namespace Altoid.Battle.Logic
             }
         }
 
+        private static void BuildCustomArgsParserTable()
+        {
+            var methods = typeof(BattleScript).GetMethods(BindingFlags.Static | BindingFlags.Public)
+                .Where(m => m.GetCustomAttributes(typeof(BattleScriptCustomArgsParserAttribute), false).Length > 0)
+                .ToArray();
+            foreach (var method in methods)
+            {
+                var attr = method.GetCustomAttribute<BattleScriptCustomArgsParserAttribute>();
+                if (_argsParserTable.ContainsKey(attr.Command))
+                {
+                    throw new Exception($"Unable to build battle script custom args parser table - multiple parsers using for command {attr.Command}. There must be at most one custom parser per command.");
+                }
+                _argsParserTable[attr.Command] = (args, code) => (int)method.Invoke(null, new object[] { args, code });
+            }
+        }
+
         public static BattleScript Parse(TextAsset script) => Parse(script.text, script.name);
+
+        private static string _scriptName;
+        private static int _line;
 
         public static BattleScript Parse (string scriptData, string scriptName)
         {
+            _scriptName = scriptName;
             var lines = Regex.Split(scriptData, "\r\n|\r|\n");
             var cmdList = new List<int>();
             var labelTable = new Dictionary<string, int>();
             var cmdIndex = 0;
             for (int i = 0; i < lines.Length; i++)
             {
+                _line = i;
                 var data = lines[i].Trim();
                 if (data.StartsWith("//"))
                 {
@@ -141,75 +163,32 @@ namespace Altoid.Battle.Logic
                     bool addLate = false;
                     if (_battleScriptOperandTypeTable[cmd] == typeof(float))
                     {
-                        cmdList.Add((int)BattleScriptCmd.PushFloat);
-                        cmdIndex++;
-                        if (cmd != BattleScriptCmd.PushFloat && cmd != BattleScriptCmd.PushFloatArray) addLate = true;
-                        else if (splut.Length == 1) throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - load command with no data");
-                        if (splut.Length > 1)
+                        if (_argsParserTable.ContainsKey(cmd)) cmdIndex += _argsParserTable[cmd](splut, cmdList);
+                        else
                         {
-                            cmdList.Add(splut.Length - 1);
-                            cmdIndex++;
-                            for (int i2 = 1; i2 < splut.Length; i2++)
-                            {
-                                try
-                                {
-                                    cmdList.Add(BitConverter.SingleToInt32Bits(float.Parse(splut[i2])));
-                                    cmdIndex++;
-                                }
-                                catch
-                                {
-                                    throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - bad value {splut[i2]}");
-                                }
-                            }
+                            cmdIndex += ParseArgsPushFloat(splut, cmdList);
+                            if (cmd != BattleScriptCmd.PushFloat) addLate = true;
+                            else if (splut.Length == 1) throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - load command with no data");
                         }
                     }
                     else if (_battleScriptOperandTypeTable[cmd] == typeof(int))
                     {
-                        cmdList.Add((int)BattleScriptCmd.PushInt);
-                        cmdIndex++;
-                        if (cmd != BattleScriptCmd.PushInt && cmd != BattleScriptCmd.PushIntArray) addLate = true;
-                        else if (splut.Length == 1) throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - load command with no data");
-                        if (splut.Length > 1)
+                        if (_argsParserTable.ContainsKey(cmd)) cmdIndex += _argsParserTable[cmd](splut, cmdList);
+                        else
                         {
-                            cmdList.Add(splut.Length - 1);
-                            cmdIndex++;
-                            for (int i2 = 1; i2 < splut.Length; i2++)
-                            {
-                                try
-                                {
-                                    cmdList.Add(int.Parse(splut[i2]));
-                                    cmdIndex++;
-                                }
-                                catch
-                                {
-                                    throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - bad value {splut[i2]}");
-                                }
-                            }
+                            cmdIndex += ParseArgsPushInt(splut, cmdList);
+                            if (cmd != BattleScriptCmd.PushInt) addLate = true;
+                            else if (splut.Length == 1) throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - load command with no data");
                         }
                     }
                     else if (_battleScriptOperandTypeTable[cmd] == typeof(string))
                     {
-                        cmdList.Add((int)BattleScriptCmd.PushString);
-                        cmdIndex++;
-                        if (cmd != BattleScriptCmd.PushString) addLate = true;
-                        else if (splut.Length == 1) throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - load command with no data");
-                        if (splut.Length > 1)
+                        if (_argsParserTable.ContainsKey(cmd)) cmdIndex += _argsParserTable[cmd](splut, cmdList);
+                        else
                         {
-                            var s = data.Substring(splut[0].Length).TrimStart().ToCharArray();
-                            cmdList.Add(s.Length);
-                            cmdIndex++;
-                            for (int i2 = 0; i2 < s.Length; i2++)
-                            {
-                                try
-                                {
-                                    cmdList.Add(s[i2]);
-                                    cmdIndex++;
-                                }
-                                catch
-                                {
-                                    throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - bad value {splut[i2]}");
-                                }
-                            }
+                            cmdIndex += ParseArgsPushString(data, splut, cmdList);
+                            if (cmd != BattleScriptCmd.PushString) addLate = true;
+                            else if (splut.Length == 1) throw new BattleScriptException($"Parse error on script {scriptName} line {i + 1} - load command with no data");
                         }
                     }
                     else addLate = true;
@@ -221,6 +200,79 @@ namespace Altoid.Battle.Logic
                 }
             }
             return new BattleScript(scriptName, cmdList, labelTable);
+        }
+
+        private static int ParseArgsPushFloat(string[] tokens, List<int> code)
+        {
+            code.Add((int)BattleScriptCmd.PushFloat);
+            var len = 1;
+            if (tokens.Length > 1)
+            {
+                code.Add(tokens.Length - 1);
+                len++;
+                for (int i = 1; i < tokens.Length; i++)
+                {
+                    try
+                    {
+                        code.Add(BitConverter.SingleToInt32Bits(float.Parse(tokens[i])));
+                        len++;
+                    }
+                    catch
+                    {
+                        throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
+                    }
+                }
+            }
+            return len;
+        }
+
+        private static int ParseArgsPushInt(string[] tokens, List<int> code)
+        {
+            code.Add((int)BattleScriptCmd.PushInt);
+            var len = 1;
+            if (tokens.Length > 1)
+            {
+                code.Add(tokens.Length - 1);
+                len++;
+                for (int i = 1; i < tokens.Length; i++)
+                {
+                    try
+                    {
+                        code.Add(int.Parse(tokens[i]));
+                        len++;
+                    }
+                    catch
+                    {
+                        throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
+                    }
+                }
+            }
+            return len;
+        }
+
+        private static int ParseArgsPushString(string raw, string[] tokens, List<int> code)
+        {
+            code.Add((int)BattleScriptCmd.PushString);
+            var len = 1;
+            if (tokens.Length > 1)
+            {
+                var s = raw.Substring(tokens[0].Length).TrimStart().ToCharArray();
+                code.Add(s.Length);
+                len++;
+                for (int i = 0; i < s.Length; i++)
+                {
+                    try
+                    {
+                        code.Add(s[i]);
+                        len++;
+                    }
+                    catch
+                    {
+                        throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
+                    }
+                }
+            }
+            return len;
         }
     }
 }

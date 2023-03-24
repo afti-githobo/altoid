@@ -130,17 +130,17 @@ namespace Altoid.Battle.Logic
 
         private IReadOnlyList<float> _PopFloatArray()
         {
-            List<float> ls = new();
             var len = _stack.Pop();
-            for (int i = 0; i < len; i++) ls.Add(_PopFloat());
+            var ls = new float[len];
+            for (int i = 0; i < len; i++) ls[i] = _PopFloat();
             return ls;
         }
 
         private IReadOnlyList<int> _PopIntArray()
         {
-            List<int> ls = new();
             var len = _stack.Pop();
-            for (int i = 0; i < len; i++) ls.Add(_PopInt());
+            var ls = new int[len];
+            for (int i = 0; i < len; i++) ls[i] = _PopInt();
             return ls;
         }
 
@@ -231,14 +231,12 @@ namespace Altoid.Battle.Logic
 
         private void PushFloatArray(float[] vs)
         {
-            Array.Reverse(vs);
             PushFloat(vs);
             _stack.Push(vs.Length);
         }
 
         private void PushIntArray(int[] vs)
         {
-            Array.Reverse(vs);
             PushInt(vs);
             _stack.Push(vs.Length);
         }
@@ -321,6 +319,59 @@ namespace Altoid.Battle.Logic
                 vs[i] = currentScript_Next;
             }
             PushIntArray(vs);
+        }
+    }
+
+    public partial class BattleScript
+    {
+        [BattleScriptCustomArgsParser(BattleScriptCmd.PushFloatArray)]
+        public static int ParseArgsPushFloatArray(string[] tokens, List<int> code)
+        {
+            code.Add((int)BattleScriptCmd.PushFloatArray);
+            var len = 1;
+            if (tokens.Length > 1)
+            {
+                code.Add(tokens.Length - 1);
+                len++;
+                for (int i = 1; i < tokens.Length; i++)
+                {
+                    try
+                    {
+                        code.Add(BitConverter.SingleToInt32Bits(float.Parse(tokens[i])));
+                        len++;
+                    }
+                    catch
+                    {
+                        throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
+                    }
+                }
+            }
+            return len;
+        }
+
+        [BattleScriptCustomArgsParser(BattleScriptCmd.PushIntArray)]
+        public static int ParseArgsPushIntArray(string[] tokens, List<int> code)
+        {
+            code.Add((int)BattleScriptCmd.PushIntArray);
+            var len = 1;
+            if (tokens.Length > 1)
+            {
+                code.Add(tokens.Length - 1);
+                len++;
+                for (int i = 1; i < tokens.Length; i++)
+                {
+                    try
+                    {
+                        code.Add(int.Parse(tokens[i]));
+                        len++;
+                    }
+                    catch
+                    {
+                        throw new BattleScriptException($"Parse error on script {_scriptName} line {_line} - bad value {tokens[i]}");
+                    }
+                }
+            }
+            return len;
         }
     }
 }

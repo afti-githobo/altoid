@@ -97,8 +97,9 @@ namespace Altoid.Battle.Logic
 
         private void BeginExecutingScript(BattleScript script)
         {
+            if (currentScript != null) codePointer = -1; // Offset starting code pointer if already executing - it's always incremented as the last step of executing a command
+            else codePointer = 0;
             currentScript = script;
-            codePointer = 0;
             OnScriptExecutionStarted?.Invoke(this, script.Name);
         }
 
@@ -128,6 +129,7 @@ namespace Altoid.Battle.Logic
 
         private void ExecuteBattleScriptCmd()
         {
+            UnityEngine.Debug.Log(codePointer);
             currentCmd = (BattleScriptCmd)currentScript.Code[codePointer];
             BattleScript.BattleScriptCmdTable[currentCmd].Invoke(this);
             codePointer++;

@@ -289,4 +289,34 @@ public class BattleScriptTests
         Assert.AreEqual(2, env.StackDepth);
         Assert.AreEqual(3, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
+
+    [Test]
+    public void FlowControlTestUnconditionalBranchToScript()
+    {
+        const string scriptA = "PushInt 1\nBranchToScriptUnconditional b_test.bscript\nPushInt 42\nNop";
+        const string scriptB = "PushInt 1\nPushInt 3\nNop";
+        var parsedA = BattleScript.Parse(scriptA, "a_" + scriptName);
+        var parsedB = BattleScript.Parse(scriptB, "b_" + scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsedA, parsedB);
+        env.RunScript("a_" + scriptName);
+        for (int i = 0; i < 7; i++) env.Step();
+        Assert.AreEqual(4, env.StackDepth);
+        Assert.AreEqual(42, (int)CallPrivate(env, "_PopInt", new Type[0]));
+    }
+
+    [Test]
+    public void FlowControlTestConditionalBranchToScript()
+    {
+        const string scriptA = "PushInt 1\nBranchToScriptConditional b_test.bscript\nPushInt 42\nNop";
+        const string scriptB = "PushInt 1\nPushInt 3\nNop";
+        var parsedA = BattleScript.Parse(scriptA, "a_" + scriptName);
+        var parsedB = BattleScript.Parse(scriptB, "b_" + scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsedA, parsedB);
+        env.RunScript("a_" + scriptName);
+        for (int i = 0; i < 7; i++) env.Step();
+        Assert.AreEqual(3, env.StackDepth);
+        Assert.AreEqual(42, (int)CallPrivate(env, "_PopInt", new Type[0]));
+    }
 }

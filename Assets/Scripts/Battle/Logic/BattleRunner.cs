@@ -129,7 +129,6 @@ namespace Altoid.Battle.Logic
 
         private void ExecuteBattleScriptCmd()
         {
-            UnityEngine.Debug.Log(codePointer);
             currentCmd = (BattleScriptCmd)currentScript.Code[codePointer];
             BattleScript.BattleScriptCmdTable[currentCmd].Invoke(this);
             codePointer++;

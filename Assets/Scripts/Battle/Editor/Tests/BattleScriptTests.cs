@@ -233,4 +233,30 @@ public class BattleScriptTests
         }
         Assert.AreEqual(0, env.StackDepth);
     }
+
+    [Test]
+    public void FlowControlTestUnconditionalJump()
+    {
+        const string script = "PushInt 1\nJumpUnconditional SKIP\nPushInt 2\n#SKIP\nNop\nPushInt 3\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 5; i++) env.Step();
+        Assert.AreEqual(2, env.StackDepth);
+        Assert.AreEqual(3, (int)CallPrivate(env, "_PopInt", new Type[0]));
+    }
+
+    [Test]
+    public void FlowControlTestConditionalJump()
+    {
+        const string script = "PushInt 1\nJumpConditional SKIP\nPushInt 2\n#SKIP\nNop\nPushInt 3\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 5; i++) env.Step();
+        Assert.AreEqual(1, env.StackDepth);
+        Assert.AreEqual(3, (int)CallPrivate(env, "_PopInt", new Type[0]));
+    }
 }

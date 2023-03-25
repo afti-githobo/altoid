@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 21
+  controlID: 54
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 454
     height: 957
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 26
+  controlID: 55
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 27
+  controlID: 56
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -307,7 +307,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 130
+    ID: 110
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -373,9 +373,9 @@ MonoBehaviour:
       uniqueId: '[altoid][suite]'
       name: altoid
       fullName: altoid
-      resultStatus: 1
-      duration: 0.0871475
-      messages: 
+      resultStatus: 2
+      duration: 0.107078
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -389,9 +389,9 @@ MonoBehaviour:
       uniqueId: '[Tests][D:/gamedev/altoid/Library/ScriptAssemblies/Tests.dll][suite]'
       name: Tests.dll
       fullName: D:/gamedev/altoid/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 1
-      duration: 0.0541192
-      messages: 
+      resultStatus: 2
+      duration: 0.0726928
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -405,9 +405,9 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
       name: BattleScriptTests
       fullName: BattleScriptTests
-      resultStatus: 1
-      duration: 0.0520616
-      messages: 
+      resultStatus: 2
+      duration: 0.0706354
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -422,11 +422,125 @@ MonoBehaviour:
       name: BattleScriptParsesAsExpected
       fullName: BattleScriptTests.BattleScriptParsesAsExpected
       resultStatus: 1
-      duration: 0.0358562
+      duration: 0.0037586
       messages: 
-      output: "Disassembly:\n2 4 1086324736 1082130432 1073741824 0 3 2 1 2 30 3
-        1 4 31 3 1 111 32 1 \nPushFloat 6 4 2 0 \r\nPushInt 1 2 \r\nIntAdd \r\nPushInt
-        4 \r\nIntSub \r\nPushInt 111 \r\nIntMult \r\nNop \r\n\r\n"
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
+    - id: 1007
+      uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FloatComparisonsTest]
+      name: FloatComparisonsTest
+      fullName: BattleScriptTests.FloatComparisonsTest
+      resultStatus: 1
+      duration: 0.0013716
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
+    - id: 1011
+      uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FloatMathTest]
+      name: FloatMathTest
+      fullName: BattleScriptTests.FloatMathTest
+      resultStatus: 1
+      duration: 0.0038119
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
+    - id: 1013
+      uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FlowControlTestUnconditionalJump]
+      name: FlowControlTestUnconditionalJump
+      fullName: BattleScriptTests.FlowControlTestUnconditionalJump
+      resultStatus: 2
+      duration: 0.0506232
+      messages: "  Expected: 2\r\n  But was:  1\r\n"
+      output: 'PushInt
+
+        PushString
+
+        JumpUnconditional
+
+        Nop
+
+        test.bscript
+        - nop
+
+'
+      stacktrace: 'at BattleScriptTests.FlowControlTestUnconditionalJump () [0x00043]
+        in D:\gamedev\altoid\Assets\Scripts\Battle\Editor\Tests\BattleScriptTests.cs:246
+
+'
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
+    - id: 1009
+      uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.IntComparisonsTest]
+      name: IntComparisonsTest
+      fullName: BattleScriptTests.IntComparisonsTest
+      resultStatus: 1
+      duration: 0.0008829
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
+    - id: 1012
+      uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.IntMathTest]
+      name: IntMathTest
+      fullName: BattleScriptTests.IntMathTest
+      resultStatus: 1
+      duration: 0.0003868
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
+    - id: 1006
+      uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.StackFloatArrayTest]
+      name: StackFloatArrayTest
+      fullName: BattleScriptTests.StackFloatArrayTest
+      resultStatus: 1
+      duration: 0.0006786
+      messages: 
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -441,15 +555,26 @@ MonoBehaviour:
       name: StackFloatTest
       fullName: BattleScriptTests.StackFloatTest
       resultStatus: 1
-      duration: 0.0053902
+      duration: 0.0005408
       messages: 
-      output: '6
-
-        7
-
-        1077936128
-
-'
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
+    - id: 1007
+      uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.StackIntArrayTest]
+      name: StackIntArrayTest
+      fullName: BattleScriptTests.StackIntArrayTest
+      resultStatus: 1
+      duration: 0.0005111
+      messages: 
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -464,15 +589,9 @@ MonoBehaviour:
       name: StackIntTest
       fullName: BattleScriptTests.StackIntTest
       resultStatus: 1
-      duration: 0.0026081
+      duration: 0.00069
       messages: 
-      output: '6
-
-        7
-
-        3
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -487,7 +606,7 @@ MonoBehaviour:
       name: StackStringTest
       fullName: BattleScriptTests.StackStringTest
       resultStatus: 1
-      duration: 0.032382
+      duration: 0.0028425
       messages: 
       output: 
       stacktrace: 
@@ -499,20 +618,35 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
-    m_ResultText: 'StackIntTest (0.003s)
+    - id: 1010
+      uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.StringComparisonsTest]
+      name: StringComparisonsTest
+      fullName: BattleScriptTests.StringComparisonsTest
+      resultStatus: 1
+      duration: 0.0012317
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1001
+      parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
+    m_ResultText: "FlowControlTestUnconditionalJump (0.051s)\n---\nExpected: 2\r\n 
+      But was:  1\n---\nat BattleScriptTests.FlowControlTestUnconditionalJump ()
+      [0x00043] in D:\\gamedev\\altoid\\Assets\\Scripts\\Battle\\Editor\\Tests\\BattleScriptTests.cs:246\n---\nPushInt\r\nPushString\r\nJumpUnconditional\r\nNop\r\ntest.bscript
+      - nop"
+    m_ResultStacktrace: 'at BattleScriptTests.FlowControlTestUnconditionalJump ()
+      [0x00043] in D:\gamedev\altoid\Assets\Scripts\Battle\Editor\Tests\BattleScriptTests.cs:246
 
-      ---
-
-      6
-
-      7
-
-      3'
-    m_ResultStacktrace: 
+'
     m_TestListState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 7fd98043
-      m_LastClickedID: 1132517759
+      m_SelectedIDs: 40706ac6
+      m_LastClickedID: -966102976
       m_ExpandedIDs: b3e813906d3965f7e589b6fcedc8ba77ffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -596,7 +730,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 63}
     m_SelectedIDs: 20580000
     m_LastClickedID: 22560
-    m_ExpandedIDs: 00000000ee570000fc57000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000ea570000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -624,7 +758,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ee570000
+    m_ExpandedIDs: 00000000ea570000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -754,9 +888,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3c160000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0694ffffea94ffffce95ffffb296ffff9697ffffe297ffffc898ffffae99ffff929affff9c9bffffe89bffffce9cffffb29dffff989effff7c9fffff62a0ffff46a1ffff2ca2ffffa4a3ffff88a4ffff6ca5ffff52a6ffff36a7ffff8ea8ffff74a9fffffca9ffffe0aaffff2cabffff0eacfffff4acffffd8adffffc8aeffffb4afffff2eb1ffff7ab1ffff62b2ffff46b3ffff2ab4ffff10b5fffff4b5ffffd8b6ffff24b7ffff08b8ffff14b9fffff8b9ffffdebaffff2abbffff0ebcffff8abdffff6ebeffffe8bfffff60c1ffff44c2ffff26c3ffff0ac4ffff56c4ffff3cc5ffff88c5ffff04c7ffffe8c7ffffccc8ffffd6c9ffff7acbfffff4ccffff40cdffffbaceffff34d0ffff1ad1ffff64d4ffff48d5ffff2cd6ffff36d7ffff1ad8ffff4ad9ffff54daffff38dbffff1cdcffff26ddffffa2deffff86dfffff6ce0ffff88e4ffff6ce5ffff50e6ffff34e7ffff3ee8ffff22e9ffff06eaffffeaeafffff4ebffffe2edffffc6eeffffaaefffff22f1ffff06f2ffffeaf2fffff4f3ffff1cf5ffff50f6ffff36f7ffff1ef8ffff30fbffff
+      m_ExpandedIDs: baa6ffff8ea7ffff62a8ffffc4a9ffff98aaffffb0acfffff4acffffc8adffff0cafffff50b0ffff26b1fffffcb1ffffd0b2ffffa6b3ffffeab3ffffe6b4ffffcab5ffffa0b6ffff74b7ffff6ab8ffff3eb9ffff12baffff02bcffffd8bcffffacbdffff80beffff54bfffff28c0fffffcc0ffff96c4ffff84c6ffff5ac7ffff2cc8ffff8ec9ffff62caffff36cbffff0accffffa4cdffffe8cdffffbcceffffc0cfffffccd1ffffbcd3ffff92d4ffff66d5ffff3cd6ffff30d7ffff50d8ffff3cd9ffff3edaffff62dbffff44dcffff32ddffffb2dfffffc2e0ffff06e1fffff2e1ffffe8e2ffff70e4ffff74e5ffffb8e5ffffa4e6ffff92e7ffff7ee8ffff6ae9ffffaee9ffff9aeaffff30edffff1ceeffffc4f2ffff98f3ffffdcf3ffffb0f4ffff84f5ffffc8f5ffff0cf6ffff94f7ffff90f8ffff36fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

@@ -5,7 +5,7 @@
         private void JumpToLabel(string label)
         {
             if (!currentScript.Labels.ContainsKey(label)) throw new BattleScriptException($"{currentCmd} attempted jump to nonexistant label ${label}");
-            codePointer = currentScript.Labels[label];
+            codePointer = currentScript.Labels[label] - 1; // Code pointer advances after this runs, meaning we want to set it to v - 1 so we increment to the correct position
         }
 
         [BattleScript(BattleScriptCmd.Nop)]
@@ -21,11 +21,8 @@
         [BattleScript(BattleScriptCmd.JumpConditional, typeof(string))]
         public void Cmd_JumpConditional()
         {
-            if (GetComparisonVal())
-            {
-                PopString(out string label);
-                JumpToLabel(label);
-            }
+            PopString(out string label);
+            if (GetComparisonVal()) JumpToLabel(label);
         }
 
         [BattleScript(BattleScriptCmd.JumpToScriptUnconditional, typeof(string))]
@@ -40,9 +37,9 @@
         [BattleScript(BattleScriptCmd.JumpToScriptConditional, typeof(string))]
         public void Cmd_JumpToScriptConditional()
         {
+            PopString(out string id);
             if (GetComparisonVal())
             {
-                PopString(out string id);
                 var script = GetScriptInBank(id);
                 if (script == null) throw new BattleScriptException($"Attempted jump to script {id} not present in bank");
                 BeginExecutingScript(script);
@@ -61,9 +58,9 @@
         [BattleScript(BattleScriptCmd.BranchToScriptConditional, typeof(string))]
         public void Cmd_BranchToScriptConditional()
         {
+            PopString(out string id);
             if (GetComparisonVal())
             {
-                PopString(out string id);
                 var script = GetScriptInBank(id);
                 if (script == null) throw new BattleScriptException($"Attempted branch to script {id} not present in bank");
                 BranchToScript(script);

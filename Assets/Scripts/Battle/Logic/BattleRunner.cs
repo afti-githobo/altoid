@@ -7,18 +7,6 @@ namespace Altoid.Battle.Logic
 {
     public partial class BattleRunner
     {
-        private readonly struct Frame
-        {
-            public readonly BattleScript script;
-            public readonly int codePointer;
-
-            public Frame(BattleScript script, int codePointer)
-            {
-                this.script = script;
-                this.codePointer = codePointer;
-            }
-        }
-
         public event EventHandler<int> DoLoadBattleScene;
         public event EventHandler OnLoadedBattleScene;
         public event EventHandler OnLoadedPuppetBatch;
@@ -41,7 +29,7 @@ namespace Altoid.Battle.Logic
 
         private int codePointer;
 
-        private Stack<Frame> _executionStack = new();
+
 
         private Dictionary<string, BattleScript> _scriptBank = new();
 
@@ -103,28 +91,15 @@ namespace Altoid.Battle.Logic
             OnScriptExecutionStarted?.Invoke(this, script.Name);
         }
 
-        private void BranchToScript(BattleScript script)
-        {
-            _executionStack.Push(new Frame(currentScript, codePointer));
-            BeginExecutingScript(script);
-        }
-
         private void EndExecutingScript()
         {
             OnScriptExecutionEnded?.Invoke(this, currentScript.Name);
-            if (_executionStack.Count > 0)
-            {
-                var frame = _executionStack.Pop();
-                currentScript = frame.script;
-                codePointer = frame.codePointer;
-            } else
-            {
-                OnAllScriptExecutionEnded?.Invoke(this, EventArgs.Empty);
-                currentScript = null;
-                codePointer = 0;
-                if (StackDepth > 0) Debug.LogWarning($"Script execution ended with a stack depth of {StackDepth}. This may indicate a problem with a script somewhere. If this is expected, ignore this message.");
-                ClearStack();
-            }
+            if (executionStack.Count > 0) Debug.LogWarning($"Script execution ended with a call stack depth of {executionStack.Count}. This may indicate a problem with a script somewhere. If this is expected, ignore this message.");
+            OnAllScriptExecutionEnded?.Invoke(this, EventArgs.Empty);
+            currentScript = null;
+            codePointer = 0;
+            if (StackDepth > 0) Debug.LogWarning($"Script execution ended with a stack depth of {StackDepth}. This may indicate a problem with a script somewhere. If this is expected, ignore this message.");
+            ClearStack();
         }
 
         private void ExecuteBattleScriptCmd()

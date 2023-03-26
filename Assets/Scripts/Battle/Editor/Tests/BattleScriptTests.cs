@@ -261,6 +261,32 @@ public class BattleScriptTests
     }
 
     [Test]
+    public void FlowControlTestUnconditionalBranch()
+    {
+        const string script = "PushInt 1\nBranchUnconditional SKIP\nPushInt 2\n#SKIP\nNop\nPushInt 3\nReturn\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 8; i++) env.Step();
+        Assert.AreEqual(3, env.StackDepth);
+        Assert.AreEqual(2, (int)CallPrivate(env, "_PopInt", new Type[0]));
+    }
+
+    [Test]
+    public void FlowControlTestConditionalBranch()
+    {
+        const string script = "PushInt 1\nBranchConditional SKIP\nPushInt 2\n#SKIP\nNop\nPushInt 3\nReturn\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 8; i++) env.Step();
+        Assert.AreEqual(2, env.StackDepth);
+        Assert.AreEqual(2, (int)CallPrivate(env, "_PopInt", new Type[0]));
+    }
+
+    [Test]
     public void FlowControlTestUnconditionalJumpToScript()
     {
         const string scriptA = "PushInt 1\nJumpToScriptUnconditional b_test.bscript\nPushInt 2";
@@ -294,7 +320,7 @@ public class BattleScriptTests
     public void FlowControlTestUnconditionalBranchToScript()
     {
         const string scriptA = "PushInt 1\nBranchToScriptUnconditional b_test.bscript\nPushInt 42\nNop";
-        const string scriptB = "PushInt 1\nPushInt 3\nNop";
+        const string scriptB = "PushInt 1\nPushInt 3\nReturn";
         var parsedA = BattleScript.Parse(scriptA, "a_" + scriptName);
         var parsedB = BattleScript.Parse(scriptB, "b_" + scriptName);
         var env = new BattleRunner();
@@ -309,7 +335,7 @@ public class BattleScriptTests
     public void FlowControlTestConditionalBranchToScript()
     {
         const string scriptA = "PushInt 1\nBranchToScriptConditional b_test.bscript\nPushInt 42\nNop";
-        const string scriptB = "PushInt 1\nPushInt 3\nNop";
+        const string scriptB = "PushInt 1\nPushInt 3\nReturn";
         var parsedA = BattleScript.Parse(scriptA, "a_" + scriptName);
         var parsedB = BattleScript.Parse(scriptB, "b_" + scriptName);
         var env = new BattleRunner();

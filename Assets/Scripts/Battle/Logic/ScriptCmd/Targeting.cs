@@ -27,6 +27,11 @@ namespace Altoid.Battle.Logic
         private List<Battler>[] TargetGroups { get => _targetGroups ?? GetTargetGroups(); }
         private List<Battler>[] _targetGroups;
 
+        public int TargetIndex { get; private set; }
+        public int SelectedTargetGroup { get; private set; }
+
+        public Battler Target => TargetGroups[SelectedTargetGroup][TargetIndex];
+
         private List<Battler>[] GetTargetGroups() => _targetGroups = new List<Battler>[] { _targetGroup0, _targetGroup1, _targetGroup2, _targetGroup3, _targetGroup4, _targetGroup5, _targetGroup6, _targetGroup7 };
 
         private void SetActingBattler(Battler b)

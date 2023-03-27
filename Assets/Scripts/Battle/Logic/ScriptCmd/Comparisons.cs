@@ -69,7 +69,7 @@
         }
 
         [BattleScript(BattleScriptCmd.IntGreaterThan, typeof(int))]
-        public void Cmd_IntGeaterThan()
+        public void Cmd_IntGreaterThan()
         {
             PopInt(out var a, out var b);
             if (a > b) PushInt(Constants.TRUE);

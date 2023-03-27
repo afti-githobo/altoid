@@ -75,5 +75,11 @@
         RemoveTargetsFromGroup,
         ClearGroup,
         ClearAllGroups,
+        GetActingBattlerStat,
+        GetTargetStat,
+        GetActingBattlerLevel,
+        GetTargetLevel,
+        DealDamageToTarget,
+        MissTargetWithAttack
     }
 }

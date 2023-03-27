@@ -345,4 +345,43 @@ public class BattleScriptTests
         Assert.AreEqual(3, env.StackDepth);
         Assert.AreEqual(42, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
+
+    [Test]
+    public void SaveTestFloats()
+    {
+        const string script = "PushFloat 3\nSetSaveFloat val\nGetSaveFloat val\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 5; i++) env.Step();
+        Assert.AreEqual(1, env.StackDepth);
+        Assert.AreEqual(3, (float)CallPrivate(env, "_PopFloat", new Type[0]));
+    }
+
+    [Test]
+    public void SaveTestInts()
+    {
+        const string script = "PushInt 3\nSetSaveInt val\nGetSaveInt val\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 5; i++) env.Step();
+        Assert.AreEqual(1, env.StackDepth);
+        Assert.AreEqual(3, (int)CallPrivate(env, "_PopInt", new Type[0]));
+    }
+
+    [Test]
+    public void SaveTestStrings()
+    {
+        const string script = "PushString Three\nSetSaveString val\nGetSaveString val\nNop";
+        var parsed = BattleScript.Parse(script, scriptName);
+        var env = new BattleRunner();
+        env.LoadScripts(parsed);
+        env.RunScript(scriptName);
+        for (int i = 0; i < 5; i++) env.Step();
+        Assert.AreEqual(6, env.StackDepth);
+        Assert.AreEqual("Three", (string)CallPrivate(env, "_PopString", new Type[0]));
+    }
 }

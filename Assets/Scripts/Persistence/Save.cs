@@ -54,6 +54,8 @@ namespace Altoid.Persistence
 
     public class Save : ScriptableObject
     {
+        public static Save Current { get; private set; } = CreateInstance<Save>(); // temp - should be a saner mechanism for supplying a default save
+
         public DateTime Timestamp { get => _timestamp; }
         private DateTime _timestamp = DateTime.Now;
         public IReadOnlyDictionary<string, SaveField> Data { get => _data; }
@@ -63,30 +65,30 @@ namespace Altoid.Persistence
         public int Checksum { get => _checksum; }
         private int _checksum = 0;
 
-        public float Set(string k, float v) => (_data[k] = new SaveFieldFloat(v)).GetFloat();
+        public float SetFloat(string k, float v) => (_data[k] = new SaveFieldFloat(v)).GetFloat();
 
-        public float Get(string k, float? _default = null)
+        public float GetFloat(string k, float? _default = null)
         {
             if (Data.ContainsKey(k)) return Data[k].GetFloat();
-            else if (_default != null) return Set(k, _default.Value);
+            else if (_default != null) return SetFloat(k, _default.Value);
             else throw new KeyNotFoundException($"Save has no field {k}");
         }
 
-        public int Set(string k, int v) => (_data[k] = new SaveFieldInt(v)).GetInt();
+        public int SetInt(string k, int v) => (_data[k] = new SaveFieldInt(v)).GetInt();
 
-        public float Get(string k, int? _default = null)
+        public int GetInt(string k, int? _default = null)
         {
             if (Data.ContainsKey(k)) return Data[k].GetInt();
-            else if (_default != null) return Set(k, _default.Value);
+            else if (_default != null) return SetInt(k, _default.Value);
             else throw new KeyNotFoundException($"Save has no field {k}");
         }
 
-        public string Set(string k, string v) => (_data[k] = new SaveFieldString(v)).GetString();
+        public string SetString(string k, string v) => (_data[k] = new SaveFieldString(v)).GetString();
 
-        public string Get(string k, string _default = null)
+        public string GetString(string k, string _default = null)
         {
             if (Data.ContainsKey(k)) return Data[k].GetString();
-            else if (_default != null) return Set(k, _default);
+            else if (_default != null) return SetString(k, _default);
             else throw new KeyNotFoundException($"Save has no field {k}");
         }
     }

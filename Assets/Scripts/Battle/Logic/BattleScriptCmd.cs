@@ -69,13 +69,11 @@
         SetSaveFloat,
         SetSaveInt,
         SetSaveString,
-        AddActionTargets,
-        ClearActionTargets,
-        ClearSelectedActionTargets,
-        RemoveActionTargets,
-        SelectActionTargets,
         SetActingBattler,
-        UnselectActionTargets,
         UnsetActingBattler,
+        AddTargetsToGroup,
+        RemoveTargetsFromGroup,
+        ClearGroup,
+        ClearAllGroups,
     }
 }

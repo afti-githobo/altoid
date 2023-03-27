@@ -16,5 +16,13 @@
 
         public const int FALSE = 0;
         public const int TRUE = 1;
+
+        public const int STAT_MAX_HP = 0;
+        public const int STAT_ATK = 1;
+        public const int STAT_DEF = 2;
+        public const int STAT_DEX = 3;
+        public const int STAT_AGI = 4;
+        public const int STAT_SPD = 5;
+
     }
 }

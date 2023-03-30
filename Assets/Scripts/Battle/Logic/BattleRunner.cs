@@ -22,6 +22,8 @@ namespace Altoid.Battle.Logic
 
         public BattleDef Definition { get; private set; }
 
+        public int Delay { get; private set; }
+
         private BattleScript currentScript;
         private BattleScriptCmd currentCmd;
 

@@ -24,5 +24,9 @@
         public const int STAT_AGI = 4;
         public const int STAT_SPD = 5;
 
+        public const int ENTROPY_MIN = 0;
+        public const int ENTROPY_MAX = 10;
+        public const int ENTROPY_INFINITE = 11;
+
     }
 }

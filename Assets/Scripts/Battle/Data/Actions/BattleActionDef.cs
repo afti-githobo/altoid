@@ -26,9 +26,9 @@ namespace Altoid.Battle.Data.Action
             public IReadOnlyList<int> ParamsInt { get => _paramsInt; }
             [SerializeField]
             private int[] _paramsInt;
-            public IReadOnlyList<int> ParamsString { get => _paramsString; }
+            public IReadOnlyList<string> ParamsString { get => _paramsString; }
             [SerializeField]
-            private int[] _paramsString;
+            private string[] _paramsString;
             public IReadOnlyList<TextAsset> Scripts { get => _scripts; }
             [SerializeField]
             private TextAsset[] _scripts;

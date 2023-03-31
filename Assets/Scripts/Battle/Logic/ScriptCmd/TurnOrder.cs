@@ -18,10 +18,13 @@ namespace Altoid.Battle.Logic
             var delayValues = new List<int>();
             for (int i = 0; i < Battlers.Count; i++)
             {
-                var delay = Battlers[i].ProvisionalDelay;
-                if (!battlersByDelay.ContainsKey(delay)) battlersByDelay[delay] = new();
-                battlersByDelay[delay].Add(Battlers[i]);
-                if (!delayValues.Contains(delay)) delayValues.Add(delay);
+                if (Battlers[i].ExistsForTurnOrder)
+                {
+                    var delay = Battlers[i].ProvisionalDelay;
+                    if (!battlersByDelay.ContainsKey(delay)) battlersByDelay[delay] = new();
+                    battlersByDelay[delay].Add(Battlers[i]);
+                    if (!delayValues.Contains(delay)) delayValues.Add(delay);
+                }
             }
             delayValues.Sort((v1, v2) => v1.CompareTo(v2));
             for (int i = 0; i < delayValues.Count; i++)
@@ -49,7 +52,7 @@ namespace Altoid.Battle.Logic
             var v = 0;
             for (int i = 0; i < Battlers.Count; i++)
             {
-                if (Battlers[i].ShouldBeCountedForSpeedFactorCalculations)
+                if (Battlers[i].ExistsForTurnOrder)
                 {
                     q++;
                     v += Battlers[i].Stats[Constants.STAT_SPD];

@@ -1,9 +1,14 @@
 ﻿using Altoid.Battle.Data;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Altoid.Battle.Logic
 {
+    public delegate List<TextAsset> ActionLoadListSource();
+    public delegate Task<BattleAction> ActionSource(Battler actor);
+
     public class Battler
     {
         public static event EventHandler<Battler> OnSpawn;
@@ -17,12 +22,30 @@ namespace Altoid.Battle.Logic
         public static event EventHandler<Battler> OnTurnEnd;
 
         public readonly BattlerDef BattlerDef;
+        public readonly BattlerInstanceDef InstanceDef;
 
         public BattleStatBlock BaseStats { get; private set; }
 
         public List<StatusEffect> StatusEffects { get; private set; } = new();
 
         public readonly BattleRunner Parent;
+
+        public Battler(BattleRunner parent, BattlerInstanceDef instance, BattlerDef battlerDef, ActionSource actionSource, ActionLoadListSource actionLoadListSource)
+        {
+            BattlerDef = battlerDef;
+            InstanceDef = instance;
+            BaseStats = battlerDef.BaseStats;
+            Parent = parent;
+            Level = battlerDef.BaseLevel + instance.LevelBonus;
+            Stance = instance.StartingStance;
+            IsDead = instance.Dead;
+            IsHidden = instance.Hidden;
+            CurrentHP = battlerDef.BaseStats.MaxHP - instance.StartingDamage;
+            Delay = instance.StartingDelay;
+            this.actionSource = actionSource;
+            this.actionLoadListSource = actionLoadListSource;
+            RecalculateStats();
+        }
 
         public int Level { get; private set; }
         public int EntropyLevel { get; private set; }
@@ -37,13 +60,18 @@ namespace Altoid.Battle.Logic
 
         public int ProvisionalDelay { get => Delay + _provisionalDelay; }
         private int _provisionalDelay;
-        private int _provisionalSpeed;
+
+        private ActionSource actionSource;
+        private ActionLoadListSource actionLoadListSource;
+
+        public async Task<BattleAction> GetAction() => await actionSource(this);
 
         public void SupplyProvisionalTurnOrderData(int speedBonus, int speedMulti, int delay)
         {
             _provisionalDelay = Delay + delay;
-
         }
+
+        public IReadOnlyList<TextAsset> GetScriptsToLoad() => actionLoadListSource();
 
         public void RecalculateStats()
         {
@@ -57,7 +85,7 @@ namespace Altoid.Battle.Logic
             OnStatsRecalculated?.Invoke(this, this);
         }
 
-        public bool ShouldBeCountedForSpeedFactorCalculations => !IsDead && !IsHidden;
+        public bool ExistsForTurnOrder => !IsDead && !IsHidden;
 
         private void RecalculateStat(int baseStat, int statIndex)
         {

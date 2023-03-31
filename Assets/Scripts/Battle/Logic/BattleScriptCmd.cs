@@ -80,6 +80,7 @@
         GetActingBattlerLevel,
         GetTargetLevel,
         DealDamageToTarget,
-        MissTargetWithAttack
+        MissTargetWithAttack,
+        EndActionPacket
     }
 }

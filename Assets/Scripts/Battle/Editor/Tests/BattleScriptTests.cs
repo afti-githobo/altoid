@@ -51,7 +51,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        env.Step();
+        env.StepScripts();
         Assert.AreEqual(4, env.StackDepth);
         var v0 = (float)CallPrivate(env, "_PopFloat", new Type[0]);
         var v1 = (float)CallPrivate(env, "_PopFloat", new Type[0]);
@@ -72,7 +72,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        env.Step();
+        env.StepScripts();
         Assert.AreEqual(4, env.StackDepth);
         var v0 = (int)CallPrivate(env, "_PopInt", new Type[0]);
         var v1 = (int)CallPrivate(env, "_PopInt", new Type[0]);
@@ -93,7 +93,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        env.Step();
+        env.StepScripts();
         Assert.AreEqual(8, env.StackDepth);
         var v = (string)CallPrivate(env, "_PopString", new Type[0]);
         Assert.AreEqual(0, env.StackDepth);
@@ -108,7 +108,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        env.Step();
+        env.StepScripts();
         Assert.AreEqual(7, env.StackDepth);
         var vs = (IReadOnlyList<float>)CallPrivate(env, "_PopFloatArray", new Type[0]);
         var expected = new float[] { 0, 1, 2, 3, 4, 5 };
@@ -125,7 +125,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        env.Step();
+        env.StepScripts();
         Assert.AreEqual(7, env.StackDepth);
         var vs = (IReadOnlyList<int>)CallPrivate(env, "_PopIntArray", new Type[0]);
         var expected = new int[] { 0, 1, 2, 3, 4, 5 };
@@ -142,7 +142,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 12; i++) env.Step();
+        for (int i = 0; i < 12; i++) env.StepScripts();
         Assert.AreEqual(6, env.StackDepth);
         for (int i = 0; i < 6; i++)
         {
@@ -160,7 +160,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 12; i++) env.Step();
+        for (int i = 0; i < 12; i++) env.StepScripts();
         Assert.AreEqual(6, env.StackDepth);
         for (int i = 0; i < 6; i++)
         {
@@ -178,7 +178,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 12; i++) env.Step();
+        for (int i = 0; i < 12; i++) env.StepScripts();
         Assert.AreEqual(4, env.StackDepth);
         for (int i = 0; i < 4; i++)
         {
@@ -197,7 +197,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 30; i++) env.Step();
+        for (int i = 0; i < 30; i++) env.StepScripts();
         Assert.AreEqual(15, env.StackDepth);
         Assert.AreEqual(-1, (float)CallPrivate(env, "_PopFloat", new Type[0]));
         var rand = (float)CallPrivate(env, "_PopFloat", new Type[0]);
@@ -220,7 +220,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 24; i++) env.Step();
+        for (int i = 0; i < 24; i++) env.StepScripts();
         Assert.AreEqual(12, env.StackDepth);
         Assert.AreEqual(2, (float)CallPrivate(env, "_PopFloat", new Type[0]));
         var rand = (int)CallPrivate(env, "_PopInt", new Type[0]);
@@ -242,7 +242,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 5; i++) env.Step();
+        for (int i = 0; i < 5; i++) env.StepScripts();
         Assert.AreEqual(2, env.StackDepth);
         Assert.AreEqual(3, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
@@ -255,7 +255,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 5; i++) env.Step();
+        for (int i = 0; i < 5; i++) env.StepScripts();
         Assert.AreEqual(1, env.StackDepth);
         Assert.AreEqual(3, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
@@ -268,7 +268,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 8; i++) env.Step();
+        for (int i = 0; i < 8; i++) env.StepScripts();
         Assert.AreEqual(3, env.StackDepth);
         Assert.AreEqual(2, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
@@ -281,7 +281,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 8; i++) env.Step();
+        for (int i = 0; i < 8; i++) env.StepScripts();
         Assert.AreEqual(2, env.StackDepth);
         Assert.AreEqual(2, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
@@ -296,7 +296,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsedA, parsedB);
         env.RunScript("a_" + scriptName);
-        for (int i = 0; i < 5; i++) env.Step();
+        for (int i = 0; i < 5; i++) env.StepScripts();
         Assert.AreEqual(3, env.StackDepth);
         Assert.AreEqual(3, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
@@ -311,7 +311,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsedA, parsedB);
         env.RunScript("a_" + scriptName);
-        for (int i = 0; i < 5; i++) env.Step();
+        for (int i = 0; i < 5; i++) env.StepScripts();
         Assert.AreEqual(2, env.StackDepth);
         Assert.AreEqual(3, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
@@ -326,7 +326,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsedA, parsedB);
         env.RunScript("a_" + scriptName);
-        for (int i = 0; i < 7; i++) env.Step();
+        for (int i = 0; i < 7; i++) env.StepScripts();
         Assert.AreEqual(4, env.StackDepth);
         Assert.AreEqual(42, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
@@ -341,7 +341,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsedA, parsedB);
         env.RunScript("a_" + scriptName);
-        for (int i = 0; i < 7; i++) env.Step();
+        for (int i = 0; i < 7; i++) env.StepScripts();
         Assert.AreEqual(3, env.StackDepth);
         Assert.AreEqual(42, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
@@ -354,7 +354,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 5; i++) env.Step();
+        for (int i = 0; i < 5; i++) env.StepScripts();
         Assert.AreEqual(1, env.StackDepth);
         Assert.AreEqual(3, (float)CallPrivate(env, "_PopFloat", new Type[0]));
     }
@@ -367,7 +367,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 5; i++) env.Step();
+        for (int i = 0; i < 5; i++) env.StepScripts();
         Assert.AreEqual(1, env.StackDepth);
         Assert.AreEqual(3, (int)CallPrivate(env, "_PopInt", new Type[0]));
     }
@@ -380,7 +380,7 @@ public class BattleScriptTests
         var env = new BattleRunner();
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
-        for (int i = 0; i < 5; i++) env.Step();
+        for (int i = 0; i < 5; i++) env.StepScripts();
         Assert.AreEqual(6, env.StackDepth);
         Assert.AreEqual("Three", (string)CallPrivate(env, "_PopString", new Type[0]));
     }

@@ -28,5 +28,8 @@
         public const int ENTROPY_MAX = 10;
         public const int ENTROPY_INFINITE = 11;
 
+        public const string END_ACTION_PACKET_SCRIPT = "endActionPacket";
+        public const string END_ACTION_PACKET_SCRIPT_FILENAME = "BScript/Battle/System/endActionPacket";
+
     }
 }

@@ -6,9 +6,6 @@ using UnityEngine;
 
 namespace Altoid.Battle.Logic
 {
-    public delegate List<TextAsset> ActionLoadListSource();
-    public delegate Task<BattleAction> ActionSource(Battler actor);
-
     public class Battler
     {
         public static event EventHandler<Battler> OnSpawn;
@@ -30,7 +27,9 @@ namespace Altoid.Battle.Logic
 
         public readonly BattleRunner Parent;
 
-        public Battler(BattleRunner parent, BattlerInstanceDef instance, BattlerDef battlerDef, ActionSource actionSource, ActionLoadListSource actionLoadListSource)
+        private ActionSource actionSource;
+
+        public Battler(BattleRunner parent, BattlerInstanceDef instance, BattlerDef battlerDef)
         {
             BattlerDef = battlerDef;
             InstanceDef = instance;
@@ -42,8 +41,7 @@ namespace Altoid.Battle.Logic
             IsHidden = instance.Hidden;
             CurrentHP = battlerDef.BaseStats.MaxHP - instance.StartingDamage;
             Delay = instance.StartingDelay;
-            this.actionSource = actionSource;
-            this.actionLoadListSource = actionLoadListSource;
+            actionSource = ActionSource.New(BattlerDef.ActionSource.Type, this);
             RecalculateStats();
         }
 
@@ -61,17 +59,14 @@ namespace Altoid.Battle.Logic
         public int ProvisionalDelay { get => Delay + _provisionalDelay; }
         private int _provisionalDelay;
 
-        private ActionSource actionSource;
-        private ActionLoadListSource actionLoadListSource;
-
-        public async Task<BattleAction> GetAction() => await actionSource(this);
+        public async Task<BattleAction> GetAction() => await actionSource.SelectNextAction();
 
         public void SupplyProvisionalTurnOrderData(int speedBonus, int speedMulti, int delay)
         {
             _provisionalDelay = Delay + delay;
         }
 
-        public IReadOnlyList<TextAsset> GetScriptsToLoad() => actionLoadListSource();
+        public IReadOnlyList<TextAsset> GetScriptsToLoad() => actionSource.ActionLoadList;
 
         public void RecalculateStats()
         {

@@ -1,5 +1,7 @@
+using Altoid.Battle.Logic;
 using System;
 using System.Collections.Generic;
+using TypeReferences;
 using UnityEngine;
 
 namespace Altoid.Battle.Data
@@ -40,5 +42,10 @@ namespace Altoid.Battle.Data
         public IReadOnlyList<string> Tags { get => _tags; }
         [SerializeField]
         private List<string> _tags = new();
+
+        public TypeReference ActionSource { get => _actionSource; }
+        [SerializeField]
+        [Inherits(typeof(ActionSource))]
+        private TypeReference _actionSource;
     }
 }

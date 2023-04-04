@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 1007
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Console
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 21
+  controlID: 47
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 454
     height: 957
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -94,8 +94,8 @@ MonoBehaviour:
     y: 0
     width: 363
     height: 625
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -120,14 +120,14 @@ MonoBehaviour:
     y: 625
     width: 1466
     height: 332
-  m_MinSize: {x: 231, y: 271}
-  m_MaxSize: {x: 10001, y: 10021}
-  m_ActualView: {fileID: 13}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 13}
   - {fileID: 18}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 105
+  controlID: 17
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -268,8 +268,8 @@ MonoBehaviour:
     y: 0
     width: 1103
     height: 625
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 16}
@@ -307,7 +307,7 @@ MonoBehaviour:
     m_SaveData: []
     m_OverlaysVisible: 1
   m_Spl:
-    ID: 132
+    ID: 110
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -385,12 +385,12 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
-    - id: 1021
+    - id: 1024
       uniqueId: '[Tests][D:/gamedev/altoid/Library/ScriptAssemblies/Tests.dll][suite]'
       name: Tests.dll
       fullName: D:/gamedev/altoid/Library/ScriptAssemblies/Tests.dll
-      resultStatus: 1
-      duration: 0.1092505
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -405,8 +405,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
       name: BattleScriptTests
       fullName: BattleScriptTests
-      resultStatus: 1
-      duration: 0.1054859
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -415,14 +415,14 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1021
+      parentId: 1024
       parentUniqueId: '[Tests][D:/gamedev/altoid/Library/ScriptAssemblies/Tests.dll][suite]'
     - id: 1002
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.BattleScriptParsesAsExpected]
       name: BattleScriptParsesAsExpected
       fullName: BattleScriptTests.BattleScriptParsesAsExpected
-      resultStatus: 1
-      duration: 0.0415261
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -438,8 +438,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FloatComparisonsTest]
       name: FloatComparisonsTest
       fullName: BattleScriptTests.FloatComparisonsTest
-      resultStatus: 1
-      duration: 0.0039556
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -455,8 +455,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FloatMathTest]
       name: FloatMathTest
       fullName: BattleScriptTests.FloatMathTest
-      resultStatus: 1
-      duration: 0.0056124
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -472,14 +472,10 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FlowControlTestConditionalBranch]
       name: FlowControlTestConditionalBranch
       fullName: BattleScriptTests.FlowControlTestConditionalBranch
-      resultStatus: 1
-      duration: 0.0054174
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: 'test.bscript - nop
-
-        test.bscript - nop
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -493,8 +489,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FlowControlTestConditionalBranchToScript]
       name: FlowControlTestConditionalBranchToScript
       fullName: BattleScriptTests.FlowControlTestConditionalBranchToScript
-      resultStatus: 1
-      duration: 0.0010816
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -510,12 +506,10 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FlowControlTestConditionalJump]
       name: FlowControlTestConditionalJump
       fullName: BattleScriptTests.FlowControlTestConditionalJump
-      resultStatus: 1
-      duration: 0.0012791
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: 'test.bscript - nop
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -529,8 +523,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FlowControlTestConditionalJumpToScript]
       name: FlowControlTestConditionalJumpToScript
       fullName: BattleScriptTests.FlowControlTestConditionalJumpToScript
-      resultStatus: 1
-      duration: 0.0009686
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -546,14 +540,10 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FlowControlTestUnconditionalBranch]
       name: FlowControlTestUnconditionalBranch
       fullName: BattleScriptTests.FlowControlTestUnconditionalBranch
-      resultStatus: 1
-      duration: 0.002208
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: 'test.bscript - nop
-
-        test.bscript - nop
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -567,8 +557,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FlowControlTestUnconditionalBranchToScript]
       name: FlowControlTestUnconditionalBranchToScript
       fullName: BattleScriptTests.FlowControlTestUnconditionalBranchToScript
-      resultStatus: 1
-      duration: 0.0007689
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -584,12 +574,10 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FlowControlTestUnconditionalJump]
       name: FlowControlTestUnconditionalJump
       fullName: BattleScriptTests.FlowControlTestUnconditionalJump
-      resultStatus: 1
-      duration: 0.0011318
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: 'test.bscript - nop
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -603,8 +591,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.FlowControlTestUnconditionalJumpToScript]
       name: FlowControlTestUnconditionalJumpToScript
       fullName: BattleScriptTests.FlowControlTestUnconditionalJumpToScript
-      resultStatus: 1
-      duration: 0.0007806
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -620,8 +608,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.IntComparisonsTest]
       name: IntComparisonsTest
       fullName: BattleScriptTests.IntComparisonsTest
-      resultStatus: 1
-      duration: 0.0010167
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -637,8 +625,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.IntMathTest]
       name: IntMathTest
       fullName: BattleScriptTests.IntMathTest
-      resultStatus: 1
-      duration: 0.0026956
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -654,8 +642,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.SaveTestFloats]
       name: SaveTestFloats
       fullName: BattleScriptTests.SaveTestFloats
-      resultStatus: 1
-      duration: 0.0017728
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -671,8 +659,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.SaveTestInts]
       name: SaveTestInts
       fullName: BattleScriptTests.SaveTestInts
-      resultStatus: 1
-      duration: 0.00089
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -688,8 +676,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.SaveTestStrings]
       name: SaveTestStrings
       fullName: BattleScriptTests.SaveTestStrings
-      resultStatus: 1
-      duration: 0.0011406
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -705,8 +693,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.StackFloatArrayTest]
       name: StackFloatArrayTest
       fullName: BattleScriptTests.StackFloatArrayTest
-      resultStatus: 1
-      duration: 0.001012
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -722,8 +710,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.StackFloatTest]
       name: StackFloatTest
       fullName: BattleScriptTests.StackFloatTest
-      resultStatus: 1
-      duration: 0.000905
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -739,8 +727,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.StackIntArrayTest]
       name: StackIntArrayTest
       fullName: BattleScriptTests.StackIntArrayTest
-      resultStatus: 1
-      duration: 0.0007973
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -756,8 +744,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.StackIntTest]
       name: StackIntTest
       fullName: BattleScriptTests.StackIntTest
-      resultStatus: 1
-      duration: 0.0009325
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -773,8 +761,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.StackStringTest]
       name: StackStringTest
       fullName: BattleScriptTests.StackStringTest
-      resultStatus: 1
-      duration: 0.0005298
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -790,8 +778,8 @@ MonoBehaviour:
       uniqueId: Tests.dll/BattleScriptTests/[Tests][BattleScriptTests.StringComparisonsTest]
       name: StringComparisonsTest
       fullName: BattleScriptTests.StringComparisonsTest
-      resultStatus: 1
-      duration: 0.0015434
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -803,7 +791,7 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1001
       parentUniqueId: Tests.dll/[Tests][BattleScriptTests][suite]
-    m_ResultText: StringComparisonsTest (0.002s)
+    m_ResultText: 
     m_ResultStacktrace: 
     m_TestListState:
       scrollPos: {x: 0, y: 4}
@@ -877,22 +865,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Battle/Logic
+    - Assets/Data/Battle/BattlerDef
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Battle/Logic
+  - Assets/Data/Battle/BattlerDef
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\gamedev\altoid
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 125}
-    m_SelectedIDs: 24580000
-    m_LastClickedID: 22564
-    m_ExpandedIDs: 00000000f2570000005800002658000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 1a5e0000
+    m_LastClickedID: 24090
+    m_ExpandedIDs: 00000000f8570000485d00004e5d0000125e000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -920,7 +908,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000f2570000
+    m_ExpandedIDs: 00000000f8570000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -945,8 +933,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 225e0000
+    m_LastClickedInstanceID: 24098
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
@@ -1050,7 +1038,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3c100000
+      m_SelectedIDs: 
       m_LastClickedID: 0
       m_ExpandedIDs: 36fbffff
       m_RenameOverlay:

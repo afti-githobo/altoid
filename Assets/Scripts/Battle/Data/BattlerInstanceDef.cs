@@ -44,7 +44,7 @@ namespace Altoid.Battle.Data
         [SerializeField]
         private List<string> _tags;
 
-        public BattlerInstanceDef(BattlerDef battler, BattleFaction faction, int levelBonus, int startingStance, int startingEntropy, int startingDamage, Vector3 position, float angle, bool hidden, bool dead, List<string> tags)
+        public BattlerInstanceDef(BattlerDef battler, BattleFaction faction, int levelBonus, int startingStance, int startingEntropy, int startingDamage, int startingDelay, Vector3 position, float angle, bool hidden, bool dead, List<string> tags)
         {
             _battler = battler;
             _faction = faction;
@@ -52,6 +52,7 @@ namespace Altoid.Battle.Data
             _startingStance = startingStance;
             _startingEntropy = startingEntropy;
             _startingDamage = startingDamage;
+            _startingDelay = startingDelay;
             _position = position;
             _angle = angle;
             _hidden = hidden;

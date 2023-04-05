@@ -29,17 +29,17 @@ namespace Altoid.Battle.Logic
 
         private ActionSource actionSource;
 
-        public Battler(BattleRunner parent, BattlerInstanceDef instance, BattlerDef battlerDef)
+        public Battler(BattleRunner parent, BattlerInstanceDef instance)
         {
-            BattlerDef = battlerDef;
+            BattlerDef = instance.Battler;
             InstanceDef = instance;
-            BaseStats = battlerDef.BaseStats;
+            BaseStats = BattlerDef.BaseStats;
             Parent = parent;
-            Level = battlerDef.BaseLevel + instance.LevelBonus;
+            Level = BattlerDef.BaseLevel + instance.LevelBonus;
             Stance = instance.StartingStance;
             IsDead = instance.Dead;
             IsHidden = instance.Hidden;
-            CurrentHP = battlerDef.BaseStats.MaxHP - instance.StartingDamage;
+            CurrentHP = BattlerDef.BaseStats.MaxHP - instance.StartingDamage;
             Delay = instance.StartingDelay;
             actionSource = ActionSource.New(BattlerDef.ActionSource.Type, this);
             RecalculateStats();

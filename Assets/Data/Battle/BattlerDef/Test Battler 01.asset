@@ -21,3 +21,8 @@ MonoBehaviour:
   _growthData: {fileID: 0}
   _elementParams: {fileID: 0}
   _tags: []
+  _actionSource:
+    GuidAssignmentFailed: 0
+    GUID: 401481a82c41baf4eb192b14f10396b2
+    _typeNameAndAssembly: Altoid.Battle.Logic.AI.ActionSource_ManualTest, AltoidBattle
+    _suppressLogs: 0

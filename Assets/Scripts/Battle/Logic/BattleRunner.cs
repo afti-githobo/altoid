@@ -95,23 +95,16 @@ namespace Altoid.Battle.Logic
             }
         }
 
-        public async void Load(BattleDef battleDef)
+        public void Load(BattleDef battleDef)
         {
             Definition = battleDef;
-            DoLoadBattleScene(this, Definition.InitialBattleScene.SceneIndex);
             LoadScripts(Resources.Load<TextAsset>(Constants.END_ACTION_PACKET_SCRIPT_FILENAME));
             for (int i = 0; i < battleDef.Battlers.Count; i++)
             {
                 var instance = battleDef.Battlers[i];
-                // TODO - finish action source stuff up
-                //var battler = new Battler(this, instance, instance.Battler)
+                var battler = new Battler(this, instance);
+                _battlers.Add(battler);
             }
-            // set up the battlers
-            // stage the puppets
-            // load the bgm
-            //DoLoadPuppetBatch()
-            
-            // async: need to load battle scene and battler puppets...
         }
 
         public async void GetNextAction()

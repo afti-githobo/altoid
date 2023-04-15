@@ -9,7 +9,12 @@ namespace Altoid.Battle.Logic
 {
     public partial class BattleRunner
     {
-        private static Dictionary<BattleSignal, LinkedList<Action>> _signalListeners = new();
+        public static BattleRunner Current { get; private set; }
+
+        public BattleRunner()
+        {
+            Current = this;
+        }
 
         public event EventHandler<int> DoLoadBattleScene;
         public event EventHandler OnLoadedBattleScene;

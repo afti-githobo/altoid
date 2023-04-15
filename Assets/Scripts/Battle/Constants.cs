@@ -31,5 +31,9 @@
         public const string END_ACTION_PACKET_SCRIPT = "endActionPacket";
         public const string END_ACTION_PACKET_SCRIPT_FILENAME = "BScript/Battle/System/endActionPacket";
 
+        public const string RESOURCE_PATH_BATTLER_MUGSHOTS = "GFX/2D/UI/Battle/HUD/Player/Mugshot";
+        public const string RESOURCE_PATH_STANCE_GLYPHS = "GFX/2D/UI/Battle/HUD/Player/StanceGlyph";
+        public const string RESOURCE_PATH_DUMMY_2D = "GFX/2D/Dummy";
+
     }
 }

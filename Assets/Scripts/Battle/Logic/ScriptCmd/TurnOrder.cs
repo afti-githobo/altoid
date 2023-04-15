@@ -5,7 +5,7 @@ namespace Altoid.Battle.Logic
     public partial class BattleRunner
     {
         public int SpeedFactor { get; private set; }
-        private IReadOnlyList<Battler> TurnOrder { get => _turnOrder; }
+        public IReadOnlyList<Battler> TurnOrder { get => _turnOrder; }
         private IReadOnlyList<Battler> _turnOrder;
 
         private void RecalculateTurnOrder() => _turnOrder = CalculateTurnOrder(true);

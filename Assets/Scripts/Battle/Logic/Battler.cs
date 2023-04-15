@@ -47,7 +47,7 @@ namespace Altoid.Battle.Logic
 
         public int Level { get; private set; }
         public int EntropyLevel { get; private set; }
-        public int Stance { get; private set; }
+        public StanceType Stance { get; private set; }
         public bool IsDead { get; private set; }
         public bool IsHidden { get; private set; }
 
@@ -141,5 +141,14 @@ namespace Altoid.Battle.Logic
         {
             Delay -= delay;
         }
+
+        public bool IsPlayer() => InstanceDef.Faction.HasFlag(BattleFaction.Player);
+
+        public bool IsPlayerAlly() => InstanceDef.Faction.HasFlag(BattleFaction.GenericAlly);
+
+        public bool IsThirdParty() => InstanceDef.Faction.HasFlag(BattleFaction.GenericThirdParty);
+
+        public bool IsEnemy() => InstanceDef.Faction.HasFlag(BattleFaction.GenericEnemy);
+
     }
 }

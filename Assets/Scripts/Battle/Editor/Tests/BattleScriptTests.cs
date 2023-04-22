@@ -48,7 +48,7 @@ public class BattleScriptTests
     {
         const string script = "PushFloat 0 1 2 3\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         env.StepScripts();
@@ -69,7 +69,7 @@ public class BattleScriptTests
     {
         const string script = "PushInt 0 1 2 3\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         env.StepScripts();
@@ -90,7 +90,7 @@ public class BattleScriptTests
     {
         const string script = "PushString ABCDEFG\nNop";    
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         env.StepScripts();
@@ -105,7 +105,7 @@ public class BattleScriptTests
     {
         const string script = "PushFloatArray 0 1 2 3 4 5\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         env.StepScripts();
@@ -122,7 +122,7 @@ public class BattleScriptTests
     {
         const string script = "PushIntArray 0 1 2 3 4 5\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         env.StepScripts();
@@ -139,7 +139,7 @@ public class BattleScriptTests
     {
         const string script = "FloatGreaterThan 1 0\nFloatLessThan 0 1\nFloatGreaterThanEquals 1 0\nFloatLessThanEquals 0 1\nFloatEquals 1 1\nFloatNotEquals 0 1\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 12; i++) env.StepScripts();
@@ -157,7 +157,7 @@ public class BattleScriptTests
     {
         const string script = "IntGreaterThan 1 0\nIntLessThan 0 1\nIntGreaterThanEquals 1 0\nIntLessThanEquals 0 1\nIntEquals 1 1\nIntNotEquals 0 1\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 12; i++) env.StepScripts();
@@ -175,7 +175,7 @@ public class BattleScriptTests
     {
         const string script = "PushString foo\nStringContains foobar\nPushString bar\nStringNotContains foo\nPushString foo\nStringEquals foo\nPushString foo\nStringNotEquals bar\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 12; i++) env.StepScripts();
@@ -194,7 +194,7 @@ public class BattleScriptTests
         const string script = "FloatAdd 1 1\nFloatSub 3 1\nFloatMult 1 2\nFloatDiv 4 2\nPushFloatArray 4 3 2\nFloatMin\nPushFloatArray 0 1 2\nFloatMax\nPushFloatArray 0 4\nFloatMean\n" +
             "FloatSqrt 4\nFloatAbs -2\nFloatFloor 2.5\nFloatCeil 1.5\nFloatRound 2.1\nFloat2Int 2\nFloatRand 0 1\n FloatSign -10\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 30; i++) env.StepScripts();
@@ -217,7 +217,7 @@ public class BattleScriptTests
         const string script = "IntAdd 1 1\nIntSub 3 1\nIntMult 1 2\nIntDiv 4 2\nIntMod 5 3\nPushIntArray 4 3 2\nIntMin\nPushIntArray 0 1 2\nIntMax\nPushIntArray 0 4\nIntMean\n" +
             "IntAbs -2\nInt2Float 2\nIntRand 0 2\n IntSqrt 4\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 24; i++) env.StepScripts();
@@ -239,7 +239,7 @@ public class BattleScriptTests
     {
         const string script = "PushInt 1\nJumpUnconditional SKIP\nPushInt 2\n#SKIP\nNop\nPushInt 3\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 5; i++) env.StepScripts();
@@ -252,7 +252,7 @@ public class BattleScriptTests
     {
         const string script = "PushInt 1\nJumpConditional SKIP\nPushInt 2\n#SKIP\nNop\nPushInt 3\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 5; i++) env.StepScripts();
@@ -265,7 +265,7 @@ public class BattleScriptTests
     {
         const string script = "PushInt 1\nBranchUnconditional SKIP\nPushInt 2\n#SKIP\nNop\nPushInt 3\nReturn\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 8; i++) env.StepScripts();
@@ -278,7 +278,7 @@ public class BattleScriptTests
     {
         const string script = "PushInt 1\nBranchConditional SKIP\nPushInt 2\n#SKIP\nNop\nPushInt 3\nReturn\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 8; i++) env.StepScripts();
@@ -293,7 +293,7 @@ public class BattleScriptTests
         const string scriptB = "PushInt 1\nPushInt 3\nNop";
         var parsedA = BattleScript.Parse(scriptA, "a_" + scriptName);
         var parsedB = BattleScript.Parse(scriptB, "b_" + scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsedA, parsedB);
         env.RunScript("a_" + scriptName);
         for (int i = 0; i < 5; i++) env.StepScripts();
@@ -308,7 +308,7 @@ public class BattleScriptTests
         const string scriptB = "PushInt 1\nPushInt 3\nNop";
         var parsedA = BattleScript.Parse(scriptA, "a_" + scriptName);
         var parsedB = BattleScript.Parse(scriptB, "b_" + scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsedA, parsedB);
         env.RunScript("a_" + scriptName);
         for (int i = 0; i < 5; i++) env.StepScripts();
@@ -323,7 +323,7 @@ public class BattleScriptTests
         const string scriptB = "PushInt 1\nPushInt 3\nReturn";
         var parsedA = BattleScript.Parse(scriptA, "a_" + scriptName);
         var parsedB = BattleScript.Parse(scriptB, "b_" + scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsedA, parsedB);
         env.RunScript("a_" + scriptName);
         for (int i = 0; i < 7; i++) env.StepScripts();
@@ -338,7 +338,7 @@ public class BattleScriptTests
         const string scriptB = "PushInt 1\nPushInt 3\nReturn";
         var parsedA = BattleScript.Parse(scriptA, "a_" + scriptName);
         var parsedB = BattleScript.Parse(scriptB, "b_" + scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsedA, parsedB);
         env.RunScript("a_" + scriptName);
         for (int i = 0; i < 7; i++) env.StepScripts();
@@ -351,7 +351,7 @@ public class BattleScriptTests
     {
         const string script = "PushFloat 3\nSetSaveFloat val\nGetSaveFloat val\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 5; i++) env.StepScripts();
@@ -364,7 +364,7 @@ public class BattleScriptTests
     {
         const string script = "PushInt 3\nSetSaveInt val\nGetSaveInt val\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 5; i++) env.StepScripts();
@@ -377,7 +377,7 @@ public class BattleScriptTests
     {
         const string script = "PushString Three\nSetSaveString val\nGetSaveString val\nNop";
         var parsed = BattleScript.Parse(script, scriptName);
-        var env = new BattleRunner();
+        var env = new BattleRunner(null);
         env.LoadScripts(parsed);
         env.RunScript(scriptName);
         for (int i = 0; i < 5; i++) env.StepScripts();

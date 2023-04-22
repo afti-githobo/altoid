@@ -1,4 +1,4 @@
-﻿using Altoid.Battle.Data;
+﻿using Altoid.Battle.Types;
 using System;
 
 namespace Altoid.Battle.Logic

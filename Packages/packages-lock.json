@@ -22,11 +22,10 @@
       "url": "https://package.openupm.com"
     },
     "com.solidalloy.util": {
-      "version": "1.40.0",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
+      "version": "file:D:/gamedev/SolidUtilities",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
     },
     "com.unity.collab-proxy": {
       "version": "2.0.1",

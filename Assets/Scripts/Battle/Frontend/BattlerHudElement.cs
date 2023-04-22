@@ -1,4 +1,4 @@
-using Altoid.Battle.Data;
+using Altoid.Battle.Types;
 using Altoid.Battle.Logic;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
-using Altoid.Battle.Data;
-using Altoid.Battle.Data.Action;
+using Altoid.Battle.Types;
+using Altoid.Battle.Types.Action;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,9 +11,16 @@ namespace Altoid.Battle.Logic
     {
         public static BattleRunner Current { get; private set; }
 
-        public BattleRunner()
+        public BattleRunner(BattleDef d)
         {
+            if (d == null)
+            {
+                Debug.LogWarning("Is a test running? BattleRunner instantiated without BattleDef");
+                return;
+            }
             Current = this;
+            Definition = d;
+            InitializeBattlers();
         }
 
         public event EventHandler<int> DoLoadBattleScene;
@@ -57,6 +64,17 @@ namespace Altoid.Battle.Logic
         private Queue<string> scriptQueue = new();
 
         public bool ReadyToRunBattleLogic => currentAction != null;
+
+        private void InitializeBattlers()
+        {
+            for (int i = 0; i < Definition.Battlers.Count; i++)
+            {
+                _battlers.Add(new Battler(this, Definition.Battlers[i]));
+                LoadScripts(_battlers[i].GetScriptsToLoad());
+            }
+            CalculateTurnOrder();
+            //LoadScripts(Definition.MainBattleScript);
+        }
 
         public void RunBattleLogic()
         {
@@ -130,6 +148,15 @@ namespace Altoid.Battle.Logic
         public void LoadScripts(params TextAsset[] scripts)
         {
             for (int i = 0; i < scripts.Length; i++)
+            {
+                var script = BattleScript.Parse(scripts[i]);
+                _scriptBank[script.Name] = script;
+            }
+        }
+
+        public void LoadScripts(IReadOnlyList<TextAsset> scripts)
+        {
+            for (int i = 0; i < scripts.Count; i++)
             {
                 var script = BattleScript.Parse(scripts[i]);
                 _scriptBank[script.Name] = script;

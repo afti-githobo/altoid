@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public class AliasAttribute : PropertyAttribute
+namespace Altoid.Util
 {
-    public string Name { get; private set; }
-    public AliasAttribute(string name) => Name = name;
+    public class AliasAttribute : PropertyAttribute
+    {
+        public string Name { get; private set; }
+        public AliasAttribute(string name) => Name = name;
+    }
 }

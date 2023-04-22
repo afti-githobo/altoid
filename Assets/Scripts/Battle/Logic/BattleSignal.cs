@@ -1,4 +1,4 @@
-﻿namespace Altoid.Battle.Data
+﻿namespace Altoid.Battle.Types
 {
     public enum BattleSignal
     {

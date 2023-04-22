@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.solidalloy.type-references": "2.16.0",
+    "com.solidalloy.util": "file:D:/gamedev/SolidUtilities",
     "com.unity.collab-proxy": "2.0.1",
     "com.unity.feature.development": "1.0.1",
     "com.unity.ide.rider": "3.0.18",

@@ -30,7 +30,7 @@ namespace Altoid.Battle.EditorTools.Datastores
                     using (var h = new EditorGUILayout.HorizontalScope())
                     {
                         enumVal = (BattlerAssetType)EditorGUILayout.EnumPopup("AssetType", k);
-                        remove = GUILayout.Button("-");
+                        remove = GUILayout.Button("-", GUILayout.Width(16));
                     }
                     using (var h = new EditorGUILayout.HorizontalScope())
                     {

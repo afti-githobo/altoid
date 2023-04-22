@@ -13,10 +13,12 @@ namespace Altoid.Battle.Frontend
 {
     public class BattleSceneManager : MonoBehaviour
     {
+        private BattleDef battle;
         private List<BattlerPuppet> puppets = new();
         private const int BATTLE_SCENE_INDEX = 2;
 
         private LinkedList<Scene> scenesLoadedBeforeBattleBegan;
+        private Scene mainSceneBeforeBattleBegan;
 
         public IEnumerable AddPuppetForBattler(Battler b)
         {
@@ -45,6 +47,7 @@ namespace Altoid.Battle.Frontend
                 }
                 loadedScenes.AddLast(scene);
             }
+            var mainScene = SceneManager.GetActiveScene();
             yield return SceneManager.LoadSceneAsync(BATTLE_SCENE_INDEX, LoadSceneMode.Single);
             yield return SceneManager.LoadSceneAsync(battle.InitialBattleScene.SceneIndex, LoadSceneMode.Additive);
             var individualBattleScene = SceneManager.GetSceneByBuildIndex(battle.InitialBattleScene.SceneIndex);
@@ -52,16 +55,21 @@ namespace Altoid.Battle.Frontend
             SceneManager.SetActiveScene(individualBattleScene);
             var runner = new BattleRunner(battle);
             var manager = FindObjectOfType<BattleSceneManager>();
+            manager.battle = battle;
             manager.scenesLoadedBeforeBattleBegan = loadedScenes;
-            for (int i = 0; i < runner.Battlers.Count; i++)
-            {
-                yield return manager.AddPuppetForBattler(runner.Battlers[i]);
-            }
+            manager.mainSceneBeforeBattleBegan = mainScene;
+            for (int i = 0; i < runner.Battlers.Count; i++) yield return manager.AddPuppetForBattler(runner.Battlers[i]);
         }
 
         public static IEnumerable ReturnFromBattle()
         {
-            throw new NotImplementedException();
+            var manager = FindObjectOfType<BattleSceneManager>();
+            var mainScene = manager.mainSceneBeforeBattleBegan;
+            var scenes = manager.scenesLoadedBeforeBattleBegan;
+            yield return SceneManager.UnloadSceneAsync(manager.battle.InitialBattleScene.SceneIndex);
+            yield return SceneManager.UnloadSceneAsync(BATTLE_SCENE_INDEX);
+            foreach (var scene in scenes) yield return SceneManager.LoadSceneAsync(scene.buildIndex);
+            SceneManager.SetActiveScene(mainScene);
         }
     }
 }

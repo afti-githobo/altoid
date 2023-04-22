@@ -11,6 +11,6 @@ namespace Altoid.Battle.Datastores
     {
         [SerializeField]
         private SerializableDictionary<BattlerAssetType, BattlerPuppetPrefabTableRow> data = new();
-        public IReadOnlyDictionary<BattlerAssetType, BattlerPuppetPrefabTableRow> Data { get => (IReadOnlyDictionary<BattlerAssetType, BattlerPuppetPrefabTableRow>)data; }
+        public IReadOnlyDictionary<BattlerAssetType, BattlerPuppetPrefabTableRow> Data { get => data; }
     }
 }

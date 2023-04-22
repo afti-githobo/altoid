@@ -6,7 +6,7 @@ namespace Altoid.Battle.Datastores
     public class BattlerPuppetPrefabTableRow : ScriptableObject
     {
         [SerializeField]
-        private BattlerPuppet prefab;
-        public BattlerPuppet Prefab { get => prefab; }
+        private string prefabAssetPath;
+        public string PrefabAssetPath { get => prefabAssetPath; }
     }
 }

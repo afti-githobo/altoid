@@ -6,23 +6,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Altoid.Util;
+using Altoid.Battle.Datastores;
 
 namespace Altoid.Battle.Frontend
 {
     public class BattleSceneManager : MonoBehaviour
     {
+        private List<BattlerPuppet> puppets = new();
         private const int BATTLE_SCENE_INDEX = 2;
 
         private LinkedList<Scene> scenesLoadedBeforeBattleBegan;
 
         public IEnumerable AddPuppetForBattler(Battler b)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable LoadAssets(BattlerAssetType assetType)
-        {
-            throw new NotImplementedException();
+            var prefabTable = Datastore.Query<BattlerPuppetPrefabTable>();
+            var row = prefabTable.Data[b.BattlerDef.AssetType];
+            if (row == null) throw new Exception($"No prefab table entry for asset type {b.BattlerDef.AssetType}");
+            var request = Resources.LoadAsync(row.PrefabAssetPath);
+            yield return request;
+            var puppet = Instantiate(request.asset as GameObject);
+            puppet.transform.parent = transform;
+            puppet.name = $"[PUPPET] {b.BattlerDef.name}";
+            puppets.Add(puppet.GetComponent<BattlerPuppet>());
         }
 
         public static IEnumerable StartBattle (BattleDef battle)
@@ -49,7 +55,6 @@ namespace Altoid.Battle.Frontend
             manager.scenesLoadedBeforeBattleBegan = loadedScenes;
             for (int i = 0; i < runner.Battlers.Count; i++)
             {
-                yield return manager.LoadAssets(runner.Battlers[i].BattlerDef.AssetType);
                 yield return manager.AddPuppetForBattler(runner.Battlers[i]);
             }
         }

@@ -1,4 +1,4 @@
-﻿using Altoid.Battle.Types;
+﻿using Altoid.Battle.Types.Battlers;
 using Altoid.Util;
 using SolidUtilities.Collections;
 using System.Collections.Generic;

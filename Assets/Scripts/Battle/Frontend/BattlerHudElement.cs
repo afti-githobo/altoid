@@ -1,9 +1,8 @@
-using Altoid.Battle.Types;
-using Altoid.Battle.Logic;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Altoid.Battle.Types.Battlers;
 
 namespace Altoid.Battle.Frontend
 {

@@ -1,12 +1,9 @@
 using NUnit.Framework;
-using UnityEngine;
-using Altoid.Battle.Logic;
 using System;
 using System.Reflection;
-using UnityEngine.TestTools;
-using System.Collections;
 using System.Collections.Generic;
 using Altoid.Battle;
+using Altoid.Battle.Types.Environment;
 
 public class BattleScriptTests
 {

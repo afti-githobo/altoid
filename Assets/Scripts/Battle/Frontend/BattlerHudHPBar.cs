@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Altoid.Battle.Types.Battlers;
 
 namespace Altoid.Battle.Frontend
 {
@@ -11,17 +12,22 @@ namespace Altoid.Battle.Frontend
         [SerializeField]
         private TextMeshProUGUI HpText;
 
-        internal void HurtFromTo(int maxHp, int hp, int newHp)
+        private int value;
+        private Battler battler;
+
+        internal void Hurt(int dmg)
         {
-            HpBarImage.fillAmount = newHp / maxHp;
-            HpText.text = $"{newHp} / {maxHp}";
+            value -= dmg;
+            HpBarImage.fillAmount = value / battler.Stats[Constants.STAT_MAX_HP];
+            HpText.text = value.ToString();
             // do an animation
         }
 
-        internal void HealFromTo(int maxHp, int hp, int newHp)
+        internal void Heal(int dmg)
         {
-            HpBarImage.fillAmount = newHp / maxHp;
-            HpText.text = $"{newHp} / {maxHp}";
+            value += dmg;
+            HpBarImage.fillAmount = value / battler.Stats[Constants.STAT_MAX_HP];
+            HpText.text = value.ToString();
             // do an animation
         }
     }

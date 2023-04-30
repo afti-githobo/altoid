@@ -1,36 +1,26 @@
-﻿using Altoid.Battle.Types;
-using Altoid.Battle.Logic;
+﻿using Altoid.Battle.Types.Battle;
+using Altoid.Battle.Types.Environment;
 using Altoid.Persistence;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Altoid.Util;
-using Altoid.Battle.Datastores;
 
 namespace Altoid.Battle.Frontend
 {
     public class BattleSceneManager : MonoBehaviour
     {
+        public static BattleSceneManager Instance { get; private set; }
+
         private BattleDef battle;
-        private List<BattlerPuppet> puppets = new();
         private const int BATTLE_SCENE_INDEX = 2;
 
         private LinkedList<Scene> scenesLoadedBeforeBattleBegan;
         private Scene mainSceneBeforeBattleBegan;
 
-        public IEnumerable AddPuppetForBattler(Battler b)
+        private void Awake()
         {
-            var prefabTable = Datastore.Query<BattlerPuppetPrefabTable>();
-            var row = prefabTable.Data[b.BattlerDef.AssetType];
-            if (row == null) throw new Exception($"No prefab table entry for asset type {b.BattlerDef.AssetType}");
-            var request = Resources.LoadAsync(row.PrefabAssetPath);
-            yield return request;
-            var puppet = Instantiate(request.asset as GameObject);
-            puppet.transform.parent = transform;
-            puppet.name = $"[PUPPET] {b.BattlerDef.name}";
-            puppets.Add(puppet.GetComponent<BattlerPuppet>());
+            Instance = this;
         }
 
         public static IEnumerable StartBattle (BattleDef battle)
@@ -51,14 +41,12 @@ namespace Altoid.Battle.Frontend
             yield return SceneManager.LoadSceneAsync(BATTLE_SCENE_INDEX, LoadSceneMode.Single);
             yield return SceneManager.LoadSceneAsync(battle.InitialBattleScene.SceneIndex, LoadSceneMode.Additive);
             var individualBattleScene = SceneManager.GetSceneByBuildIndex(battle.InitialBattleScene.SceneIndex);
-            // load battle+scene scripts...
             SceneManager.SetActiveScene(individualBattleScene);
             var runner = new BattleRunner(battle);
-            var manager = FindObjectOfType<BattleSceneManager>();
-            manager.battle = battle;
-            manager.scenesLoadedBeforeBattleBegan = loadedScenes;
-            manager.mainSceneBeforeBattleBegan = mainScene;
-            for (int i = 0; i < runner.Battlers.Count; i++) yield return manager.AddPuppetForBattler(runner.Battlers[i]);
+            Instance.battle = battle;
+            Instance.scenesLoadedBeforeBattleBegan = loadedScenes;
+            Instance.mainSceneBeforeBattleBegan = mainScene;
+            for (int i = 0; i < runner.Battlers.Count; i++) yield return BattleFrontendMain.Instance.AddPuppetForBattler(runner.Battlers[i]);
         }
 
         public static IEnumerable ReturnFromBattle()

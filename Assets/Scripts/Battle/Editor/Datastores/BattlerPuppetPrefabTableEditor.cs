@@ -1,6 +1,5 @@
 ﻿using Altoid.Battle.Datastores;
-using Altoid.Battle.Frontend;
-using Altoid.Battle.Types;
+using Altoid.Battle.Types.Battlers;
 using SolidUtilities.Collections;
 using System.Collections.Generic;
 using UnityEditor;

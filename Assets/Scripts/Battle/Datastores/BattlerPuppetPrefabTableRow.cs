@@ -1,5 +1,4 @@
-﻿using Altoid.Battle.Frontend;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Altoid.Battle.Datastores
 {

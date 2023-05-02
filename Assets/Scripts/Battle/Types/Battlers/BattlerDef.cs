@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using TypeReferences;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Altoid.Battle.Types.Battlers
 {
@@ -25,15 +28,12 @@ namespace Altoid.Battle.Types.Battlers
         public PolyScript Script { get => _script; }
         [SerializeField]
         private PolyScript _script;
-        public Type AIScript { get => _aiScript; }
-        [SerializeField]
-        private Type _aiScript;
         public int BaseLevel { get => _baseLevel; }
         [SerializeField]
         private int _baseLevel;
-        public BattleStatBlock BaseStats { get => _baseStats; }
+        public int[] BaseStats { get => _baseStats; }
         [SerializeField]
-        private BattleStatBlock _baseStats;
+        private int[] _baseStats;
         public BattlerGrowthData GrowthData { get => _growthData; }
         [SerializeField]
         private BattlerGrowthData _growthData;
@@ -48,5 +48,20 @@ namespace Altoid.Battle.Types.Battlers
         [SerializeField]
         [Inherits(typeof(ActionSource))]
         private TypeReference _actionSource;
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            var assetPath = AssetDatabase.GetAssetPath(this);
+            if (_elementParams == null || _growthData == null)
+            {
+                _growthData = CreateInstance<BattlerGrowthData>();
+                _elementParams = CreateInstance<BattlerElementParams>();
+                AssetDatabase.AddObjectToAsset(_growthData, assetPath);
+                AssetDatabase.AddObjectToAsset(_elementParams, assetPath);
+                AssetDatabase.SaveAssets();
+            }
+        }
+#endif
     }
 }

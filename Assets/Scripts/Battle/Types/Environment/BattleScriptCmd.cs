@@ -85,6 +85,10 @@
         DealDamage,
         HealDamage,
         PlayBattleAnim,
+        DelayActingBattler,
+        DelayTarget,
+        RemoveDelayFromActingBattler,
+        RemoveDelayFromTarget,
         EndActionPacket
     }
 }

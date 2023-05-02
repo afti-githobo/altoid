@@ -1,4 +1,6 @@
-﻿namespace Altoid.Battle.Types.Environment
+﻿using Altoid.Battle.Frontend;
+
+namespace Altoid.Battle.Types.Environment
 {
     public partial class BattleRunner
     {

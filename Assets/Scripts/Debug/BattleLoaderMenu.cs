@@ -1,9 +1,7 @@
-using Altoid.Battle.Types;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using Altoid.Battle.Types.Battle;
 
 namespace Altoid.Debug
 {

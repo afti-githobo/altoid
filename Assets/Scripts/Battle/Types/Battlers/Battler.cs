@@ -24,7 +24,7 @@ namespace Altoid.Battle.Types.Battlers
         public readonly BattlerDef BattlerDef;
         public readonly BattlerInstanceDef InstanceDef;
 
-        public BattleStatBlock BaseStats { get; private set; }
+        public IReadOnlyList<int> BaseStats { get; private set; }
 
         public List<StatusEffect> StatusEffects { get; private set; } = new();
 
@@ -42,7 +42,7 @@ namespace Altoid.Battle.Types.Battlers
             Stance = instance.StartingStance;
             IsDead = instance.Dead;
             IsHidden = instance.Hidden;
-            CurrentHP = BattlerDef.BaseStats.MaxHP - instance.StartingDamage;
+            CurrentHP = BattlerDef.BaseStats[Constants.STAT_MAX_HP] - instance.StartingDamage;
             Delay = instance.StartingDelay;
             actionSource = ActionSource.New(BattlerDef.ActionSource.Type, this);
             RecalculateStats();
@@ -82,12 +82,12 @@ namespace Altoid.Battle.Types.Battlers
         public void RecalculateStats()
         {
             // These loops could def. be compacted but we probably don't run this frequently enough for the optimization to matter
-            RecalculateStat(BaseStats.MaxHP, Constants.STAT_MAX_HP);
-            RecalculateStat(BaseStats.Attack, Constants.STAT_ATK);
-            RecalculateStat(BaseStats.Defense, Constants.STAT_DEF);
-            RecalculateStat(BaseStats.Dexterity, Constants.STAT_DEX);
-            RecalculateStat(BaseStats.Agility, Constants.STAT_AGI);
-            RecalculateStat(BaseStats.Speed, Constants.STAT_SPD);
+            RecalculateStat(BaseStats[Constants.STAT_MAX_HP], Constants.STAT_MAX_HP);
+            RecalculateStat(BaseStats[Constants.STAT_ATK], Constants.STAT_ATK);
+            RecalculateStat(BaseStats[Constants.STAT_DEF], Constants.STAT_DEF);
+            RecalculateStat(BaseStats[Constants.STAT_DEX], Constants.STAT_DEX);
+            RecalculateStat(BaseStats[Constants.STAT_AGI], Constants.STAT_AGI);
+            RecalculateStat(BaseStats[Constants.STAT_SPD], Constants.STAT_SPD);
             OnStatsRecalculated?.Invoke(this, this);
         }
 
@@ -120,13 +120,17 @@ namespace Altoid.Battle.Types.Battlers
         }
 
         public void DealDamage (int dmg)
-        {
-            puppet.StageDamage(dmg);
+        {      
             CurrentHP -= dmg;
             if (CurrentHP <= 0)
             {
                 CurrentHP = 0;
                 Die();
+                puppet.StageDamageEvent(new BattlerPuppet.DamageEvent(dmg, false, true));
+            }
+            else
+            {
+                puppet.StageDamageEvent(new BattlerPuppet.DamageEvent(dmg, false, false));
             }
             OnDamageTaken?.Invoke(this, this);
         }

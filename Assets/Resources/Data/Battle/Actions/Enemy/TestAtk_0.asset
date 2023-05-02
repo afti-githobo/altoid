@@ -16,9 +16,9 @@ MonoBehaviour:
   _packets:
   - _notes: Just do damage lol
     _targetGroups: 00000000
-    _signals: 01000000e9030000
     _paramsFloat: []
-    _paramsInt: 6400000064000000
-    _paramsString: 
+    _paramsInt: 640000006400000064000000
+    _paramsString: []
     _scripts:
     - {fileID: 2811297602134710623, guid: be4d5a4b0f1a28a48ad76020667a3f29, type: 3}
+  _actorEntropy: 1

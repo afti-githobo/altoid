@@ -40,18 +40,9 @@ namespace Altoid.Battle.Frontend
         {
             if (Battler != null && !Battler.IsHidden)
             {
-                UpdateHpBar();
                 UpdateEntropyBarAndStance();
             }
             else gameObject.SetActive(false);
-        }
-
-        private void UpdateHpBar()
-        {
-            var newHp = Battler.CurrentHP;
-            if (newHp > hp) HPBar.HealFromTo(Battler.Stats[Constants.STAT_MAX_HP], hp, newHp);
-            else if (newHp < hp) HPBar.HurtFromTo(Battler.Stats[Constants.STAT_MAX_HP], hp, newHp);
-            hp = newHp;
         }
 
         public void AssignBattler (Battler battler)

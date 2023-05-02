@@ -9,11 +9,13 @@ namespace Altoid.Battle.Frontend
         {
             public readonly int Damage;
             public readonly bool Miss;
+            public readonly bool Death;
 
-            public DamageEvent(int damage, bool miss)
+            public DamageEvent(int damage, bool miss, bool death)
             {
                 Damage = damage;
                 Miss = miss;
+                Death = death;
             }
         }
 
@@ -23,16 +25,20 @@ namespace Altoid.Battle.Frontend
 
         public void AssignHPBar(BattlerHudHPBar bar) => hpBar = bar;
 
-        public void StageDamage(int dmg)
+        public void StageDamageEvent(DamageEvent evt)
         {
-            stagedDamage.Enqueue(dmg);
+            stagedDamageEvents.Enqueue(evt);
         }
 
         public void TakeStagedDamage()
         {
-            var dmg = stagedDamage.Dequeue();
-            EmitDamageNumber(dmg);
-            hpBar?.Hurt(dmg);
+            var evt = stagedDamageEvents.Dequeue();
+            if (!evt.Miss)
+            {
+                EmitDamageNumber(evt.Damage);
+                hpBar?.Hurt(evt.Damage);
+            }
+
         }
 
         private void EmitDamageNumber(int dmg)

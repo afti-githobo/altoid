@@ -9,6 +9,52 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 1e006670bef64234b9aa2f8672eb7a59, type: 3}
   m_Name: Test Battler 01
+  m_EditorClassIdentifier: 
+  _description: Simple test enemy
+  _assetType: 1
+  _identity: 11
+  _defaultFaction: 2
+  _script: {fileID: 0}
+  _baseLevel: 1
+  _baseStats: e80300006400000064000000640000006400000064000000
+  _growthData: {fileID: 5512079671074277627}
+  _elementParams: {fileID: 7290060595163162270}
+  _tags: []
+  _actionSource:
+    GuidAssignmentFailed: 0
+    GUID: 
+    _typeNameAndAssembly: 
+    _suppressLogs: 0
+--- !u!114 &5512079671074277627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fe3a4ebbcd67042aa713e05e0438df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _description: 
+  _maxHpGrowthVals: 
+  _attackGrowthVals: 
+  _defenseGrowthVals: 
+  _dexterityGrowthVals: 
+  _agilityGrowthVals: 
+  _speedGrowthVals: 
+--- !u!114 &7290060595163162270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24bd8dd9314c4c64da57153ddc10d6a6, type: 3}
+  m_Name: 
   m_EditorClassIdentifier: 

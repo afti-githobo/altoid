@@ -27,7 +27,7 @@
             Target.DealDamage(dmg);
         }
 
-        [BattleScript(BattleScriptCmd.Miss]
+        [BattleScript(BattleScriptCmd.Miss)]
         public void Cmd_Miss()
         {
             Target.MissWithAttack();

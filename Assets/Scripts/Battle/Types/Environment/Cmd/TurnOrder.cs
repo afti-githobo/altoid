@@ -61,5 +61,33 @@ namespace Altoid.Battle.Types.Environment
             }
             SpeedFactor = q / v;
         }
+
+        [BattleScript(BattleScriptCmd.DelayActingBattler, typeof(int))]
+        public void Cmd_DelayActingBattler()
+        {
+            PopInt(out var delay);
+            ActingBattler.ApplyDelay(delay);
+        }
+
+        [BattleScript(BattleScriptCmd.DelayTarget, typeof(int))]
+        public void Cmd_DelayTarget()
+        {
+            PopInt(out var delay);
+            Target.ApplyDelay(delay);
+        }
+
+        [BattleScript(BattleScriptCmd.RemoveDelayFromActingBattler, typeof(int))]
+        public void Cmd_RemoveDelayFromActingBattler()
+        {
+            PopInt(out var delay);
+            ActingBattler.RemoveDelay(delay);
+        }
+
+        [BattleScript(BattleScriptCmd.RemoveDelayFromTarget, typeof(int))]
+        public void Cmd_RemoveDelayFromTarget()
+        {
+            PopInt(out var delay);
+            Target.RemoveDelay(delay);
+        }
     }
 }

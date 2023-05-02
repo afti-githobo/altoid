@@ -1,13 +1,14 @@
 // Generic attack
-// Accuracy (int) (max 100, min 0), Power (int) (min 0)
-	BranchToScriptUnconditional CalcHit
+// Delay (int), Accuracy (int) (max 100, min 0), Power (int) (min 0)
+	DelayActingBattler
+	CalcHit
 	IntLessThan 1
 	JumpConditional MISS
-	BranchToScriptUnconditional CalcDamage
-	DealDamageToTarget
+	CalcDamage
+	DealDamage
 	JumpUnconditional END
 #MISS
-	MissTargetWithAttack
+	Miss
 #END
 	Return
 // Stack empty

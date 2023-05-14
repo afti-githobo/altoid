@@ -96,6 +96,7 @@ namespace Altoid.Battle.Frontend
         public void SelectActionFor(Battler battler)
         {
             gameObject.SetActive(true);
+            BattleFrontendMain.Instance.Lock();
             selected = _menuItemsForStanceActions[0];
             selected.Hover();
             if (battler.Stance == StanceType.StanceDropped || battler.Stance == StanceType.StanceForceBroken)
@@ -119,6 +120,12 @@ namespace Altoid.Battle.Frontend
                     }
                 }
             }
+        }
+
+        public void ActionSelected(ActionMenuItem actionMenuItem)
+        {
+            BattleFrontendMain.Instance.Unlock();
+            gameObject.SetActive(false);
         }
     }
 }

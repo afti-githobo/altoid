@@ -1,5 +1,6 @@
 ﻿using Altoid.Battle.Datastores;
 using Altoid.Battle.Types.Battlers;
+using Altoid.Battle.Types.Environment;
 using Altoid.Util;
 using System;
 using System.Collections;
@@ -36,7 +37,17 @@ namespace Altoid.Battle.Frontend
 
         private void Update()
         {
-            
+            if (!isLocked) BattleRunner.Current.RunBattleLogic();
+        }
+
+        private int lockCounter = 0;
+        public bool isLocked => lockCounter > 0;
+        public void Lock() => lockCounter++;
+
+        public void Unlock()
+        {
+            lockCounter--;
+            if (lockCounter < 0) throw new Exception("BattleFrontendMain.Unlock called w/ lock counter of 0");
         }
 
         public IEnumerable AddPuppetForBattler(Battler b)

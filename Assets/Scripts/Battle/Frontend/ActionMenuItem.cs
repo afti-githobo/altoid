@@ -9,7 +9,7 @@ namespace Altoid.Battle.Frontend
     {
         static readonly int HASH_NONHOVER = Animator.StringToHash("NonHover");
         static readonly int HASH_HOVER = Animator.StringToHash("Hover");
-        static readonly int HASH_SELECT = Animator.StringToHash("HOVER");
+        static readonly int HASH_SELECT = Animator.StringToHash("Select");
 
         [SerializeField]
         private Animator animator;

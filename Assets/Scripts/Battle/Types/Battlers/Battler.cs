@@ -77,7 +77,7 @@ namespace Altoid.Battle.Types.Battlers
             _provisionalDelay = Delay + delay;
         }
 
-        public IReadOnlyList<TextAsset> GetScriptsToLoad() => actionSource.ActionLoadList;
+        public IReadOnlyList<TextAsset> GetScriptsToLoad() => actionSource.ScriptLoadList;
 
         public void RecalculateStats()
         {

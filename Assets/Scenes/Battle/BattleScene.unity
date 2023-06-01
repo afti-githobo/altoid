@@ -5108,10 +5108,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97bcc21b07abab4281adb67a3e585cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionMenu: {fileID: 0}
+  _actionMenu: {fileID: 276681726}
   _battleTextBox: {fileID: 97772594}
   _turnOrderBar: {fileID: 125168999}
-  _battlerHudElements: []
+  _battlerHudElements:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &2078270985
 MonoBehaviour:
   m_ObjectHideFlags: 0

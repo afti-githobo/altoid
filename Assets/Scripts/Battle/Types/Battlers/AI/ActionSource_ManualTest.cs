@@ -20,7 +20,7 @@ namespace Altoid.Battle.Types.Battlers.AI
 
         public ActionSource_ManualTest(Battler b) : base(b) { }
 
-        public override IReadOnlyList<TextAsset> ActionLoadList => new TextAsset[] { new TextAsset(), new TextAsset(), new TextAsset() };
+        public override IReadOnlyList<TextAsset> ScriptLoadList => new TextAsset[] { new TextAsset(), new TextAsset(), new TextAsset() };
 
         public override Task<BattleAction> SelectNextAction()
         {

@@ -9,29 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfbdf5a061ca84a4399279d384514c2a, type: 3}
+  m_Script: {fileID: 11500000, guid: d2a065d22c8c93046a13cb66a1d3a787, type: 3}
   m_Name: Test Battle 01
   m_EditorClassIdentifier: 
-  _description: Initial test battle afafasff
-  _bgm: fafasf
+  _description: Simple test battle
+  _bgm: {fileID: 8300000, guid: 07c4827ccee8e9443b1fcc35cad58163, type: 3}
   _mainBattleScript: {fileID: 0}
   _initialBattleScene: {fileID: 0}
-  _battlers:
-  - _battler: {fileID: 11400000, guid: 87d7b7e15f7f1754098397202d2f1637, type: 2}
-    _faction: 2
-    _level: 42
-    _position: {x: 0, y: 0, z: 0}
-    _angle: 0
-    _tags: []
-  - _battler: {fileID: 11400000, guid: 87d7b7e15f7f1754098397202d2f1637, type: 2}
-    _faction: 2
-    _level: 42
-    _position: {x: 0, y: 0, z: 0}
-    _angle: 0
-    _tags: []
-  - _battler: {fileID: 11400000, guid: 87d7b7e15f7f1754098397202d2f1637, type: 2}
-    _faction: 2
-    _level: 42
-    _position: {x: 0, y: 0, z: 0}
-    _angle: 0
-    _tags: []
+  _battlers: []
